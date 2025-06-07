@@ -1,0 +1,6 @@
+[2025-06-07 08:25:16 +0300] [49570] [INFO] Starting gunicorn 23.0.0
+[2025-06-07 08:25:16 +0300] [49570] [INFO] Listening at: http://127.0.0.1:8000 (49570)
+[2025-06-07 08:25:16 +0300] [49570] [INFO] Using worker: gevent
+[2025-06-07 08:25:16 +0300] [49572] [INFO] Booting worker with pid: 49572
+[2025-06-07 08:25:16 +0300] [49573] [INFO] Booting worker with pid: 49573
+[2025-06-07 08:25:16 +0300] [49574] [INFO] Booting worker with pid: 49574

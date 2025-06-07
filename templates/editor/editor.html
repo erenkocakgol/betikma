@@ -1,0 +1,675 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}AI Metin Editörü - Betikma{% endblock %}
+
+{% block content %}
+<div class="flex flex-col min-h-screen bg-gray-50 p-2 sm:p-4">
+
+    <!-- AI Araçları -->
+    <div class="w-full bg-white rounded-xl shadow-lg p-3 sm:p-4 mb-3 sm:mb-4 border border-gray-100 fade-in-up">
+        <h2 class="text-lg sm:text-xl font-semibold text-dark-green mb-3 sm:mb-0 sm:mr-4 text-center sm:text-left">AI Araçları:</h2>
+        
+        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2 sm:gap-3 lg:gap-4">
+            <button id="summarize-btn" class="ai-tool-button">
+                <i class="fas fa-compress-alt mr-1 sm:mr-2"></i>
+                <span class="hidden xs:inline">Özetle</span>
+                <span class="xs:hidden">Özetle</span>
+            </button>
+            <button id="rewrite-btn" class="ai-tool-button">
+                <i class="fas fa-redo-alt mr-1 sm:mr-2"></i>
+                <span class="hidden xs:inline">Yeniden Yaz</span>
+                <span class="xs:hidden">Yaz</span>
+            </button>
+            <button id="expand-btn" class="ai-tool-button">
+                <i class="fas fa-expand-alt mr-1 sm:mr-2"></i>
+                <span class="hidden xs:inline">Genişlet</span>
+                <span class="xs:hidden">Genişlet</span>
+            </button>
+            <button id="grammar-btn" class="ai-tool-button">
+                <i class="fas fa-spell-check mr-1 sm:mr-2"></i>
+                <span class="hidden xs:inline">Dilbilgisi</span>
+                <span class="xs:hidden">Dilbilgisi</span>
+            </button>
+            <button id="continue-writing-btn" class="ai-tool-button col-span-2 sm:col-span-1">
+                <i class="fas fa-pen-nib mr-1 sm:mr-2"></i>
+                <span class="hidden xs:inline">Yazmaya Devam</span>
+                <span class="xs:hidden">Devam Et</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Ton Seçenekleri -->
+    <div class="w-full bg-white rounded-xl shadow-lg p-3 sm:p-4 mb-3 sm:mb-4 border border-gray-100 fade-in-up">
+        <h2 class="text-lg sm:text-xl font-semibold text-dark-green mb-3 text-center sm:text-left">Ton Seçenekleri:</h2>
+        
+        <div class="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4">
+            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2 sm:gap-3 flex-1">
+                <label class="inline-flex items-center text-sm sm:text-base">
+                    <input type="radio" name="tone_option" value="resmi" class="form-radio h-3 w-3 sm:h-4 sm:w-4 text-dark-purple" checked>
+                    <span class="ml-1 sm:ml-2 text-gray-700 font-medium">Resmi</span>
+                </label>
+                <label class="inline-flex items-center text-sm sm:text-base">
+                    <input type="radio" name="tone_option" value="samimi" class="form-radio h-3 w-3 sm:h-4 sm:w-4 text-dark-purple">
+                    <span class="ml-1 sm:ml-2 text-gray-700 font-medium">Samimi</span>
+                </label>
+                <label class="inline-flex items-center text-sm sm:text-base">
+                    <input type="radio" name="tone_option" value="iknaedici" class="form-radio h-3 w-3 sm:h-4 sm:w-4 text-dark-purple">
+                    <span class="ml-1 sm:ml-2 text-gray-700 font-medium">İkna Edici</span>
+                </label>
+                <label class="inline-flex items-center text-sm sm:text-base">
+                    <input type="radio" name="tone_option" value="akademik" class="form-radio h-3 w-3 sm:h-4 sm:w-4 text-dark-purple">
+                    <span class="ml-1 sm:ml-2 text-gray-700 font-medium">Akademik</span>
+                </label>
+                <label class="inline-flex items-center text-sm sm:text-base">
+                    <input type="radio" name="tone_option" value="eğlenceli" class="form-radio h-3 w-3 sm:h-4 sm:w-4 text-dark-purple">
+                    <span class="ml-1 sm:ml-2 text-gray-700 font-medium">Eğlenceli</span>
+                </label>
+            </div>
+            
+            <button id="apply-tone-btn" class="ai-tool-button w-full sm:w-auto sm:ml-auto">
+                <i class="fas fa-magic mr-1 sm:mr-2"></i>Tonu Uygula
+            </button>
+        </div>
+    </div>
+
+    <!-- Metin Araçları -->
+    <div class="w-full bg-white rounded-xl shadow-lg p-3 sm:p-4 mb-3 sm:mb-4 border border-gray-100 fade-in-up">
+        <h2 class="text-lg sm:text-xl font-semibold text-dark-green mb-3 sm:mb-0 text-center sm:text-left">Metin Araçları:</h2>
+        
+        <div class="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4">
+            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2 sm:gap-3 flex-1">
+                <button id="undo-btn" class="text-function-button">
+                    <i class="fas fa-undo mr-1 sm:mr-2"></i>
+                    <span class="hidden xs:inline">Geri Al</span>
+                    <span class="xs:hidden">Geri</span>
+                </button>
+                <button id="copy-btn" class="text-function-button">
+                    <i class="fas fa-copy mr-1 sm:mr-2"></i>
+                    <span class="hidden xs:inline">Kopyala</span>
+                    <span class="xs:hidden">Kopyala</span>
+                </button>
+                <button id="clear-btn" class="text-function-button">
+                    <i class="fas fa-trash-alt mr-1 sm:mr-2"></i>
+                    <span class="hidden xs:inline">Temizle</span>
+                    <span class="xs:hidden">Temizle</span>
+                </button>
+                <button id="download-txt-btn" class="text-function-button">
+                    <i class="fas fa-file-alt mr-1 sm:mr-2"></i>
+                    <span class="hidden xs:inline">TXT İndir</span>
+                    <span class="xs:hidden">TXT</span>
+                </button>
+                <button id="download-docx-btn" class="text-function-button">
+                    <i class="fas fa-file-word mr-1 sm:mr-2"></i>
+                    <span class="hidden xs:inline">DOCX İndir</span>
+                    <span class="xs:hidden">DOCX</span>
+                </button>
+            </div>
+            
+            <div class="text-xs sm:text-sm text-gray-600 text-center sm:text-right">
+                <div class="flex justify-center sm:justify-end space-x-4">
+                    <span>Kelime: <span id="word-count">0</span></span>
+                    <span>Karakter: <span id="char-count">0</span></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Metin Editörü -->
+    <div class="flex-1 flex items-center justify-center relative">
+        <div id="text-editor-container" class="w-full bg-white rounded-xl shadow-xl border border-gray-100 overflow-hidden relative fade-in-up transform hover:shadow-2xl transition-shadow duration-300">
+            <div id="a4-page" class="relative w-full mx-auto bg-white border-0 sm:border border-gray-200 shadow-inner overflow-y-auto text-gray-800 leading-relaxed focus:outline-none">
+                <textarea 
+                    id="editor-textarea" 
+                    class="w-full h-64 sm:h-96 lg:h-[500px] p-3 sm:p-6 lg:p-8 text-sm sm:text-base lg:text-lg border-none focus:ring-0 resize-none" 
+                    placeholder="Metninizi buraya yazın veya yapıştırın..."
+                    style="min-height: 250px; font-family: 'Inter', sans-serif;"></textarea>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Modal -->
+    <div id="loading-modal" class="fixed inset-0 bg-gray-600 bg-opacity-75 flex items-center justify-center z-50 hidden">
+        <div class="bg-white p-4 sm:p-6 rounded-lg shadow-xl flex flex-col items-center mx-4 w-full max-w-sm">
+            <div class="loader ease-linear rounded-full border-4 border-t-4 border-gray-200 h-10 w-10 sm:h-12 sm:w-12 mb-4"></div>
+            <p class="text-sm sm:text-lg text-gray-700 font-semibold text-center">İşlem yapılıyor, lütfen bekleyiniz...</p>
+        </div>
+    </div>
+
+</div>
+
+<style>
+    /* Custom breakpoint for extra small screens */
+    @media (min-width: 375px) {
+        .xs\:inline { display: inline; }
+        .xs\:hidden { display: none; }
+    }
+    
+    @media (max-width: 374px) {
+        .xs\:inline { display: none; }
+        .xs\:hidden { display: inline; }
+    }
+
+    /* Custom styles for AI tool buttons */
+    .ai-tool-button {
+        @apply bg-dark-purple text-white px-2 sm:px-4 lg:px-5 py-2 rounded-lg text-xs sm:text-sm lg:text-base font-medium shadow-md hover:bg-accent-purple hover:shadow-lg transition-all duration-200 ease-in-out flex items-center justify-center;
+        min-height: 40px;
+        min-width: 80px;
+    }
+
+    @media (min-width: 640px) {
+        .ai-tool-button {
+            min-width: 100px;
+        }
+    }
+
+    @media (min-width: 1024px) {
+        .ai-tool-button {
+            min-width: 120px;
+        }
+    }
+
+    /* Custom styles for Text Function buttons */
+    .text-function-button {
+        @apply bg-pastel-green text-dark-green px-2 sm:px-4 lg:px-5 py-2 rounded-lg text-xs sm:text-sm lg:text-base font-medium shadow-md hover:bg-green-200 hover:shadow-lg transition-all duration-200 ease-in-out flex items-center justify-center;
+        min-height: 40px;
+        min-width: 80px;
+    }
+
+    @media (min-width: 640px) {
+        .text-function-button {
+            min-width: 100px;
+        }
+    }
+
+    @media (min-width: 1024px) {
+        .text-function-button {
+            min-width: 120px;
+        }
+    }
+
+    /* Style for the A4 page container */
+    #a4-page {
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    /* Ensure textarea fills the container properly */
+    #editor-textarea {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+        line-height: 1.6;
+    }
+    
+    #editor-textarea::-webkit-scrollbar {
+        display: none;
+    }
+
+    /* Mobile-specific textarea improvements */
+    @media (max-width: 640px) {
+        #editor-textarea {
+            font-size: 16px !important; /* Prevent zoom on iOS */
+            line-height: 1.5;
+        }
+    }
+
+    /* Loading Spinner */
+    .loader {
+        border-top-color: #3498db;
+        animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+
+    /* Fade in animation */
+    .fade-in-up {
+        animation: fadeInUp 0.6s ease-out;
+    }
+
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* Responsive font sizes */
+    @media (max-width: 640px) {
+        .ai-tool-button i,
+        .text-function-button i {
+            font-size: 12px;
+        }
+    }
+
+    /* Button hover states for touch devices */
+    @media (hover: none) and (pointer: coarse) {
+        .ai-tool-button:hover,
+        .text-function-button:hover {
+            transform: scale(0.98);
+        }
+    }
+
+    /* Improved touch targets */
+    @media (max-width: 640px) {
+        .ai-tool-button,
+        .text-function-button {
+            min-height: 44px; /* Apple's recommended minimum touch target */
+        }
+        
+        input[type="radio"] {
+            min-width: 20px;
+            min-height: 20px;
+        }
+    }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const editorTextarea = document.getElementById('editor-textarea');
+        const summarizeBtn = document.getElementById('summarize-btn');
+        const rewriteBtn = document.getElementById('rewrite-btn');
+        const expandBtn = document.getElementById('expand-btn');
+        const grammarBtn = document.getElementById('grammar-btn');
+        const continueWritingBtn = document.getElementById('continue-writing-btn');
+
+        // New buttons
+        const undoBtn = document.getElementById('undo-btn');
+        const copyBtn = document.getElementById('copy-btn');
+        const clearBtn = document.getElementById('clear-btn');
+        const downloadTxtBtn = document.getElementById('download-txt-btn');
+        const downloadDocxBtn = document.getElementById('download-docx-btn');
+
+        // Tone Radio Buttons and Apply Button
+        const toneRadioButtons = document.querySelectorAll('input[name="tone_option"]');
+        const applyToneBtn = document.getElementById('apply-tone-btn');
+
+        // Loading modal
+        const loadingModal = document.getElementById('loading-modal');
+
+        // Word and Character Counter
+        const wordCountSpan = document.getElementById('word-count');
+        const charCountSpan = document.getElementById('char-count');
+
+        // --- Undo/Redo History Variables ---
+        let history = [''];
+        let historyPointer = 0;
+        const MAX_HISTORY_SIZE = 50;
+
+        // Function to save current text state to history
+        function saveHistory() {
+            const currentText = editorTextarea.value;
+            if (currentText === history[historyPointer]) {
+                return;
+            }
+
+            if (historyPointer < history.length - 1) {
+                history = history.slice(0, historyPointer + 1);
+            }
+
+            history.push(currentText);
+            historyPointer++;
+
+            if (history.length > MAX_HISTORY_SIZE) {
+                history.shift();
+                historyPointer--;
+            }
+            updateUndoRedoButtons();
+        }
+
+        // Function to update undo/redo button states
+        function updateUndoRedoButtons() {
+            const isDisabled = historyPointer === 0;
+            undoBtn.disabled = isDisabled;
+            
+            if (isDisabled) {
+                undoBtn.classList.add('opacity-50', 'cursor-not-allowed');
+            } else {
+                undoBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+            }
+        }
+
+        // Function to get selected text or full text
+        function getSelectedOrFullText() {
+            let text = editorTextarea.value;
+            let selectedText = text.substring(editorTextarea.selectionStart, editorTextarea.selectionEnd);
+            return selectedText.trim() !== '' ? selectedText : text;
+        }
+
+        // Function to replace selected text or full text with new content
+        function replaceText(oldText, newContent) {
+            let currentText = editorTextarea.value;
+            let start = editorTextarea.selectionStart;
+            let end = editorTextarea.selectionEnd;
+
+            saveHistory();
+
+            if (start !== end) {
+                editorTextarea.value = currentText.substring(0, start) + newContent + currentText.substring(end);
+                editorTextarea.selectionStart = start + newContent.length;
+                editorTextarea.selectionEnd = start + newContent.length;
+            } else {
+                editorTextarea.value = newContent;
+            }
+            updateCounts();
+            adjustTextareaHeight();
+        }
+
+        // Helper function for sending POST requests
+        async function sendPostRequest(url, data) {
+            const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]') ? document.querySelector('[name=csrfmiddlewaretoken]').value : '';
+
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': csrfToken,
+                },
+                body: JSON.stringify(data)
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.error || 'Bir hata oluştu.');
+            }
+            return response;
+        }
+
+        // AI API call function
+        async function callAIApi(action, text, tone = null) {
+            if (!text.trim()) {
+                showMobileAlert("Lütfen işlem yapmak için bir metin girin.");
+                return null;
+            }
+
+            loadingModal.classList.remove('hidden');
+            editorTextarea.disabled = true;
+
+            const apiUrl = '{% url "editor:api_process_text" %}';
+            
+            const requestData = { action: action, text: text };
+            if (tone) {
+                requestData.tone = tone;
+            }
+
+            try {
+                const response = await sendPostRequest(apiUrl, requestData);
+                const data = await response.json();
+                return data.processed_text;
+            } catch (error) {
+                showMobileAlert(`AI işlemi sırasında hata oluştu: ${error.message}`);
+                return null;
+            } finally {
+                editorTextarea.disabled = false;
+                loadingModal.classList.add('hidden');
+            }
+        }
+
+        // Mobile-friendly alert function
+        function showMobileAlert(message) {
+            if (window.innerWidth <= 640) {
+                // Create custom mobile alert
+                const alertDiv = document.createElement('div');
+                alertDiv.className = 'fixed inset-x-0 top-4 mx-4 bg-red-500 text-white p-4 rounded-lg shadow-lg z-50 text-center';
+                alertDiv.textContent = message;
+                document.body.appendChild(alertDiv);
+                
+                setTimeout(() => {
+                    alertDiv.remove();
+                }, 3000);
+            } else {
+                alert(message);
+            }
+        }
+
+        // Word and Character Count Update Function
+        function updateCounts() {
+            const text = editorTextarea.value;
+            const words = text.trim().split(/\s+/).filter(word => word.length > 0);
+            wordCountSpan.textContent = words.length;
+            charCountSpan.textContent = text.length;
+        }
+
+        // Adjust textarea height dynamically
+        function adjustTextareaHeight() {
+            if (window.innerWidth <= 640) {
+                // On mobile, maintain fixed height for better UX
+                return;
+            }
+            editorTextarea.style.height = 'auto';
+            editorTextarea.style.height = editorTextarea.scrollHeight + 'px';
+        }
+
+        // Initial setup
+        saveHistory();
+        updateCounts();
+        updateUndoRedoButtons();
+        adjustTextareaHeight();
+
+        // Event Listeners for AI Buttons
+        summarizeBtn.addEventListener('click', async () => {
+            const textToProcess = getSelectedOrFullText();
+            const result = await callAIApi('summarize', textToProcess);
+            if (result) replaceText(textToProcess, result);
+        });
+
+        rewriteBtn.addEventListener('click', async () => {
+            const textToProcess = getSelectedOrFullText();
+            const result = await callAIApi('rewrite', textToProcess);
+            if (result) replaceText(textToProcess, result);
+        });
+
+        expandBtn.addEventListener('click', async () => {
+            const textToProcess = getSelectedOrFullText();
+            const result = await callAIApi('expand', textToProcess);
+            if (result) replaceText(textToProcess, result);
+        });
+
+        grammarBtn.addEventListener('click', async () => {
+            const textToProcess = getSelectedOrFullText();
+            const result = await callAIApi('grammar', textToProcess);
+            if (result) replaceText(textToProcess, result);
+        });
+
+        applyToneBtn.addEventListener('click', async () => {
+            let selectedTone = null;
+            for (const radio of toneRadioButtons) {
+                if (radio.checked) {
+                    selectedTone = radio.value;
+                    break;
+                }
+            }
+
+            if (!selectedTone) {
+                showMobileAlert("Lütfen bir ton seçiniz.");
+                return;
+            }
+
+            const textToProcess = getSelectedOrFullText();
+            const result = await callAIApi('tone', textToProcess, selectedTone);
+            if (result) replaceText(textToProcess, result);
+        });
+
+        continueWritingBtn.addEventListener('click', async () => {
+            const textToProcess = editorTextarea.value;
+            const result = await callAIApi('continue_writing', textToProcess);
+            if (result) {
+                saveHistory();
+                editorTextarea.value += "\n\n" + result;
+                updateCounts();
+                adjustTextareaHeight();
+                editorTextarea.scrollTop = editorTextarea.scrollHeight;
+            }
+        });
+
+        // Event Listener for Undo Button
+        undoBtn.addEventListener('click', () => {
+            if (historyPointer > 0) {
+                historyPointer--;
+                editorTextarea.value = history[historyPointer];
+                updateCounts();
+                updateUndoRedoButtons();
+                adjustTextareaHeight();
+            }
+        });
+
+        // Copy button with mobile support
+        copyBtn.addEventListener('click', async () => {
+            try {
+                if (navigator.clipboard && window.isSecureContext) {
+                    await navigator.clipboard.writeText(editorTextarea.value);
+                    showMobileAlert("Metin panoya kopyalandı!");
+                } else {
+                    // Fallback for older browsers
+                    editorTextarea.select();
+                    editorTextarea.setSelectionRange(0, 99999);
+                    document.execCommand('copy');
+                    showMobileAlert("Metin panoya kopyalandı!");
+                }
+            } catch (err) {
+                console.error("Metin kopyalanamadı:", err);
+                showMobileAlert("Metin kopyalanamadı. Lütfen manuel olarak kopyalayın.");
+            }
+        });
+
+        clearBtn.addEventListener('click', () => {
+            const confirmMessage = "Metin alanını temizlemek istediğinizden emin misiniz?";
+            
+            if (window.innerWidth <= 640) {
+                // Custom mobile confirm dialog
+                const confirmDiv = document.createElement('div');
+                confirmDiv.className = 'fixed inset-0 bg-gray-600 bg-opacity-75 flex items-center justify-center z-50 p-4';
+                confirmDiv.innerHTML = `
+                    <div class="bg-white p-6 rounded-lg shadow-xl max-w-sm w-full">
+                        <p class="text-gray-700 mb-4 text-center">${confirmMessage}</p>
+                        <div class="flex space-x-3">
+                            <button id="confirm-clear" class="flex-1 bg-red-500 text-white py-2 px-4 rounded hover:bg-red-600">Evet</button>
+                            <button id="cancel-clear" class="flex-1 bg-gray-300 text-gray-700 py-2 px-4 rounded hover:bg-gray-400">Hayır</button>
+                        </div>
+                    </div>
+                `;
+                document.body.appendChild(confirmDiv);
+                
+                document.getElementById('confirm-clear').addEventListener('click', () => {
+                    saveHistory();
+                    editorTextarea.value = '';
+                    updateCounts();
+                    updateUndoRedoButtons();
+                    adjustTextareaHeight();
+                    confirmDiv.remove();
+                });
+                
+                document.getElementById('cancel-clear').addEventListener('click', () => {
+                    confirmDiv.remove();
+                });
+            } else {
+                if (confirm(confirmMessage)) {
+                    saveHistory();
+                    editorTextarea.value = '';
+                    updateCounts();
+                    updateUndoRedoButtons();
+                    adjustTextareaHeight();
+                }
+            }
+        });
+
+        downloadTxtBtn.addEventListener('click', async () => {
+            const text = editorTextarea.value;
+            if (!text.trim()) {
+                showMobileAlert("İndirmek için metin yok.");
+                return;
+            }
+            const filename = "metin.txt";
+            const element = document.createElement('a');
+            element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+            element.setAttribute('download', filename);
+            element.style.display = 'none';
+            document.body.appendChild(element);
+            element.click();
+            document.body.removeChild(element);
+        });
+
+        downloadDocxBtn.addEventListener('click', async () => {
+            const text = editorTextarea.value;
+            if (!text.trim()) {
+                showMobileAlert("İndirmek için metin yok.");
+                return;
+            }
+
+            const docxApiUrl = '{% url "editor:download_docx" %}';
+            try {
+                loadingModal.classList.remove('hidden');
+                editorTextarea.disabled = true;
+                const response = await sendPostRequest(docxApiUrl, { text: text });
+                const blob = await response.blob();
+                const filename = response.headers.get('Content-Disposition').split('filename=')[1].replace(/"/g, '');
+
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = filename;
+                document.body.appendChild(a);
+                a.click();
+                window.URL.revokeObjectURL(url);
+                a.remove();
+            } catch (error) {
+                showMobileAlert(`DOCX oluşturma sırasında hata oluştu: ${error.message}`);
+            } finally {
+                editorTextarea.disabled = false;
+                loadingModal.classList.add('hidden');
+            }
+        });
+
+        // Textarea input event with mobile optimizations
+        let inputTimeout;
+        editorTextarea.addEventListener('input', () => {
+            updateCounts();
+            
+            // Debounced history saving
+            clearTimeout(inputTimeout);
+            inputTimeout = setTimeout(saveHistory, 500);
+            
+            // Adjust height only on desktop
+            if (window.innerWidth > 640) {
+                adjustTextareaHeight();
+            }
+        });
+
+        // Handle orientation changes on mobile
+        window.addEventListener('orientationchange', () => {
+            setTimeout(() => {
+                adjustTextareaHeight();
+            }, 100);
+        });
+
+        // Prevent zoom on iOS when focusing textarea
+        if (/iPad|iPhone|iPod/.test(navigator.userAgent)) {
+            editorTextarea.addEventListener('focus', () => {
+                editorTextarea.style.fontSize = '16px';
+            });
+        }
+
+        // Touch-friendly interactions
+        if ('ontouchstart' in window) {
+            // Add touch feedback to buttons
+            const buttons = document.querySelectorAll('.ai-tool-button, .text-function-button');
+            buttons.forEach(button => {
+                button.addEventListener('touchstart', () => {
+                    button.style.transform = 'scale(0.95)';
+                });
+                
+                button.addEventListener('touchend', () => {
+                    setTimeout(() => {
+                        button.style.transform = 'scale(1)';
+                    }, 100);
+                });
+            });
+        }
+    });
+</script>
+{% endblock %}

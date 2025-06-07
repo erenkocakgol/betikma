@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+{% block title %}Gizlilik Politikası - Betikma{% endblock %}
+
+{% block content %}
+<div class="fade-in-up bg-white p-8 rounded-2xl shadow-xl w-full max-w-4xl mx-auto border border-gray-100 hover:shadow-2xl transition-all duration-500 relative overflow-hidden">
+    <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-dark-purple to-pastel-purple"></div>
+
+    <div class="text-center mb-8">
+        <div class="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-pastel-purple to-purple-100 rounded-full mb-4 shadow-lg">
+            <i class="fas fa-shield-alt text-3xl text-dark-purple"></i>
+        </div>
+        <h1 class="text-4xl font-extrabold text-dark-purple mb-4">Gizlilik Politikası</h1>
+        <p class="text-lg text-gray-600 max-w-2xl mx-auto">Betikma olarak kişisel verilerinizin gizliliğini ve güvenliğini ciddiye alıyoruz.</p>
+    </div>
+
+    <div class="prose max-w-none text-gray-700 leading-relaxed space-y-6">
+        <p>Bu Gizlilik Politikası, Betikma web sitesini ve hizmetlerini kullandığınızda kişisel bilgilerinizin nasıl toplandığını, kullanıldığını ve paylaşıldığını açıklar.</p>
+
+        <h2 class="text-2xl font-bold text-dark-green mt-8 mb-4">1. Topladığımız Bilgiler</h2>
+        <p>Hizmetlerimizi kullandığınızda çeşitli türde bilgileri toplayabiliriz:</p>
+        <ul class="list-disc list-inside space-y-2 ml-4">
+            <li><strong>Kişisel Tanımlayıcı Bilgiler:</strong> Adınız, e-posta adresiniz gibi doğrudan sizi tanımlayan bilgiler.</li>
+            <li><strong>Kullanım Verileri:</strong> IP adresiniz, tarayıcı türünüz, ziyaret ettiğiniz sayfalar, hizmetlerimizi kullanma şekliniz gibi otomatik olarak toplanan bilgiler.</li>
+            <li><strong>İçerik Verileri:</strong> Metin yeniden yazma veya düzenleme hizmetlerimizi kullanırken girdiğiniz veya oluşturduğunuz metinler. Bu veriler, hizmetlerimizi iyileştirmek ve size daha iyi sonuçlar sunmak için kullanılabilir.</li>
+        </ul>
+
+        <h2 class="text-2xl font-bold text-dark-purple mt-8 mb-4">2. Bilgilerinizi Nasıl Kullanırız?</h2>
+        <p>Topladığımız bilgileri çeşitli amaçlarla kullanırız:</p>
+        <ul class="list-disc list-inside space-y-2 ml-4">
+            <li>Hizmetlerimizi sağlamak ve sürdürmek.</li>
+            <li>Hizmetlerimizi iyileştirmek ve kişiselleştirmek.</li>
+            <li>Kullanıcı desteği sağlamak.</li>
+            <li>Kullanım eğilimlerini analiz etmek ve hizmetlerimizin etkinliğini ölçmek.</li>
+            <li>Pazarlama ve tanıtım faaliyetleri yürütmek (onayınızla).</li>
+            <li>Yasal yükümlülüklere uymak ve haklarımızı korumak.</li>
+        </ul>
+
+        <h2 class="text-2xl font-bold text-dark-green mt-8 mb-4">3. Bilgi Paylaşımı</h2>
+        <p>Kişisel bilgilerinizi üçüncü taraflarla aşağıdaki durumlarda paylaşabiliriz:</p>
+        <ul class="list-disc list-inside space-y-2 ml-4">
+            <li>Hizmet sağlayıcılarla (örneğin, barındırma, e-posta hizmetleri, analiz araçları).</li>
+            <li>Yasal gereklilikler veya mahkeme kararı durumunda.</li>
+            <li>Şirket birleşmesi, satın alma veya varlık satışı gibi iş transferlerinde.</li>
+            <li>Açık rızanızla.</li>
+        </ul>
+
+        <h2 class="text-2xl font-bold text-dark-purple mt-8 mb-4">4. Veri Güvenliği</h2>
+        <p>Bilgilerinizi yetkisiz erişim, kullanım veya ifşadan korumak için uygun güvenlik önlemleri alıyoruz. Ancak, internet üzerinden hiçbir veri aktarımının veya elektronik depolamanın %100 güvenli olduğunu garanti edemeyiz.</p>
+
+        <h2 class="text-2xl font-bold text-dark-green mt-8 mb-4">5. Çerezler (Cookies)</h2>
+        <p>Web sitemizin işlevselliğini sağlamak, kullanımınızı analiz etmek ve deneyiminizi kişiselleştirmek için çerezleri ve benzeri teknolojileri kullanırız. Çerez tercihlerinizi tarayıcı ayarlarınızdan yönetebilirsiniz.</p>
+
+        <h2 class="text-2xl font-bold text-dark-purple mt-8 mb-4">6. Üçüncü Taraf Bağlantıları</h2>
+        <p>Hizmetlerimiz, bizim tarafımızdan işletilmeyen diğer web sitelerine bağlantılar içerebilir. Bu üçüncü taraf sitelerin içeriklerinden, gizlilik politikalarından veya uygulamalarından sorumlu değiliz.</p>
+
+        <h2 class="text-2xl font-bold text-dark-green mt-8 mb-4">7. Gizlilik Politikasındaki Değişiklikler</h2>
+        <p>Bu Gizlilik Politikasını zaman zaman güncelleyebiliriz. Herhangi bir değişiklik olduğunda sizi bilgilendireceğiz ve güncellenmiş politikayı web sitemizde yayınlayacağız.</p>
+
+        <h2 class="text-2xl font-bold text-dark-purple mt-8 mb-4">8. İletişim</h2>
+        <p>Gizlilik Politikamız hakkında herhangi bir sorunuz varsa, lütfen <a href="mailto:kristalsoft.info@gmail.com" class="text-dark-purple hover:underline">kristalsoft.info@gmail.com</a> adresinden bizimle iletişime geçin.</p>
+
+        <p class="text-sm text-gray-500 mt-8 text-right">Son Güncelleme: 25 Mayıs 2025</p>
+    </div>
+</div>
+{% endblock %}

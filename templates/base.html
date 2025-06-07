@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Betikma - AI Metin Editörü{% endblock %}</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root {
+            --color-pastel-purple: #E8DCFF;
+            --color-pastel-green: #D4F4DD;
+            --color-dark-purple: #7C3AED;
+            --color-dark-green: #059669;
+            --color-accent-purple: #A855F7;
+            --color-accent-green: #10B981;
+            --color-light-gray: #F8FAFC;
+            --color-medium-gray: #E2E8F0;
+            --shadow-soft: 0 4px 20px rgba(0, 0, 0, 0.08);
+            --shadow-medium: 0 8px 30px rgba(0, 0, 0, 0.12);
+            --shadow-strong: 0 15px 35px rgba(0, 0, 0, 0.15);
+        }
+
+        * {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+            background-attachment: fixed;
+            line-height: 1.6;
+            font-feature-settings: "liga" 1, "kern" 1;
+            text-rendering: optimizeLegibility;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* Modern Glassmorphism Effect */
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+        }
+
+        /* Enhanced Color Classes */
+        .bg-pastel-purple { background-color: var(--color-pastel-purple); }
+        .text-pastel-purple { color: var(--color-pastel-purple); }
+        .bg-pastel-green { background-color: var(--color-pastel-green); }
+        .text-pastel-green { color: var(--color-pastel-green); }
+        .bg-dark-purple { background: linear-gradient(135deg, var(--color-dark-purple), var(--color-accent-purple)); }
+        .text-dark-purple { color: var(--color-dark-purple); }
+        .bg-dark-green { background: linear-gradient(135deg, var(--color-dark-green), var(--color-accent-green)); }
+        .text-dark-green { color: var(--color-dark-green); }
+        .border-dark-purple { border-color: var(--color-dark-purple); }
+        .border-dark-green { border-color: var(--color-dark-green); }
+
+        /* Modern Navigation */
+        .modern-nav {
+            background: rgba(124, 58, 237, 0.95);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: none;
+            box-shadow: var(--shadow-medium);
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .modern-nav:hover {
+            background: rgba(124, 58, 237, 0.98);
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-strong);
+        }
+
+        /* Logo Animation */
+        .logo {
+            background: linear-gradient(45deg, #ffffff, #e8dcff);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-size: 200% 200%;
+            animation: gradientShift 3s ease-in-out infinite;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        /* Enhanced Button Styles */
+        .modern-button {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            transform: translateZ(0);
+        }
+
+        .modern-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .modern-button:hover::before {
+            left: 100%;
+        }
+
+        .modern-button:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-medium);
+        }
+
+        /* Hamburger Animation Enhanced */
+        .hamburger-icon {
+            width: 32px;
+            height: 24px;
+            position: relative;
+            cursor: pointer;
+            z-index: 1000;
+        }
+
+        .hamburger-icon span {
+            display: block;
+            position: absolute;
+            height: 3px;
+            width: 100%;
+            background: linear-gradient(45deg, #ffffff, #e8dcff);
+            border-radius: 2px;
+            opacity: 1;
+            left: 0;
+            transform: rotate(0deg);
+            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .hamburger-icon span:nth-child(1) { top: 0px; }
+        .hamburger-icon span:nth-child(2) { top: 10px; }
+        .hamburger-icon span:nth-child(3) { top: 20px; }
+
+        .hamburger-icon.open span:nth-child(1) {
+            top: 10px;
+            transform: rotate(135deg);
+        }
+        .hamburger-icon.open span:nth-child(2) {
+            opacity: 0;
+            left: -60px;
+        }
+        .hamburger-icon.open span:nth-child(3) {
+            top: 10px;
+            transform: rotate(-135deg);
+        }
+
+        /* Mobile Menu Animation */
+        .navbar-menu-closed {
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .navbar-menu-open {
+            max-height: 500px;
+            opacity: 1;
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        /* Navigation Links */
+        .nav-link {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: -100%;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, var(--color-pastel-purple), var(--color-pastel-green));
+            transition: left 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            left: 0;
+        }
+
+        /* Message Alerts Enhanced */
+        .alert {
+            border-left: 4px solid;
+            box-shadow: var(--shadow-soft);
+            transition: all 0.3s ease;
+            animation: slideInFromTop 0.5s ease-out;
+        }
+
+        @keyframes slideInFromTop {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .alert:hover {
+            transform: translateX(4px);
+            box-shadow: var(--shadow-medium);
+        }
+
+        /* Footer Enhancement */
+        .modern-footer {
+            background: linear-gradient(135deg, var(--color-dark-green), var(--color-accent-green));
+            position: relative;
+            overflow: hidden;
+        }
+
+        .modern-footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            pointer-events: none;
+        }
+
+        /* Content Container */
+        .content-container {
+            min-height: calc(100vh - 200px); /* Adjust based on actual nav/footer height */
+            display: flex;
+            flex-direction: column;
+        }
+        /* For login/signup pages, min-h-screen-minus-nav-footer is used directly on the flex container */
+        .min-h-screen-minus-nav-footer {
+            min-height: calc(100vh - 100px - 100px); /* Navbar ve footer tahmini yükseklikleri (pikselleri ayarlayabilirsiniz) */
+                                                    /* Navbar ~80px, Footer ~120px. Toplam ~200px */
+        }
+
+
+        /* Scroll Animation */
+        .fade-in-up {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease-out;
+        }
+
+        .fade-in-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Loading Animation */
+        .loading-shimmer {
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--color-light-gray);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(45deg, var(--color-dark-purple), var(--color-dark-green));
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(45deg, var(--color-accent-purple), var(--color-accent-green));
+        }
+
+        /* Responsive Typography */
+        @media (max-width: 768px) {
+            body {
+                font-size: 14px;
+            }
+        }
+
+        /* Focus States */
+        .focus-visible:focus {
+            outline: 2px solid var(--color-accent-purple);
+            outline-offset: 2px;
+        }
+    </style>
+</head>
+<body class="flex flex-col min-h-screen antialiased">
+
+    <nav class="modern-nav p-4 shadow-lg sticky top-0 z-50">
+        <div class="container mx-auto flex flex-wrap items-center justify-between">
+            <a href="{% url 'home' %}" class="logo text-white text-3xl font-black tracking-wider rounded-lg p-3 hover:bg-white hover:bg-opacity-10 transition-all duration-300">
+                <i class="fas fa-feather-alt mr-2"></i>Betikma
+            </a>
+
+            <button id="navbar-toggle" class="lg:hidden text-white focus:outline-none p-3 rounded-lg hover:bg-white hover:bg-opacity-10 transition-all duration-300 focus-visible">
+                <div class="hamburger-icon">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </button>
+
+            <div id="navbar-menu" class="lg:flex flex-col lg:flex-row lg:items-center w-full lg:w-auto mt-4 lg:mt-0 navbar-menu-closed lg:navbar-menu-open">
+                <a href="{% url 'home' %}" class="nav-link block text-white text-lg font-medium py-3 px-4 rounded-lg hover:bg-white hover:bg-opacity-10 transition-all duration-300 lg:ml-2">
+                    <i class="fas fa-home mr-2"></i>Ana Sayfa
+                </a>
+                <a href="{% url 'about' %}" class="nav-link block text-white text-lg font-medium py-3 px-4 rounded-lg hover:bg-white hover:bg-opacity-10 transition-all duration-300 lg:ml-2">
+                    <i class="fas fa-info-circle mr-2"></i>Hakkımızda
+                </a>
+                <a href="{% url 'services' %}" class="nav-link block text-white text-lg font-medium py-3 px-4 rounded-lg hover:bg-white hover:bg-opacity-10 transition-all duration-300 lg:ml-2">
+                    <i class="fas fa-cogs mr-2"></i>Hizmetler
+                </a>
+                <a href="{% url 'contact' %}" class="nav-link block text-white text-lg font-medium py-3 px-4 rounded-lg hover:bg-white hover:bg-opacity-10 transition-all duration-300 lg:ml-2">
+                    <i class="fas fa-envelope mr-2"></i>İletişim
+                </a>
+                
+                <div class="lg:ml-auto mt-4 lg:mt-0 flex flex-col lg:flex-row items-center gap-3">
+                    {% if user.is_authenticated %}
+                        <a href="{% url 'account_logout' %}" class="modern-button bg-red-500 hover:bg-red-600 text-white font-semibold py-2.5 px-6 rounded-lg shadow-md transition-all duration-300 flex items-center">
+                            <i class="fas fa-sign-out-alt mr-2"></i>Çıkış Yap
+                        </a>
+                        <a href="{% url 'account_email' %}" class="modern-button bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2.5 px-6 rounded-lg shadow-md transition-all duration-300 flex items-center">
+                            <i class="fas fa-user mr-2"></i>Profil
+                        </a>
+                    {% else %}
+                        <a href="{% url 'account_login' %}" class="modern-button bg-gradient-to-r from-green-400 to-emerald-500 hover:from-green-500 hover:to-emerald-600 text-white font-semibold py-2.5 px-6 rounded-lg shadow-md transition-all duration-300 flex items-center">
+                            <i class="fas fa-sign-in-alt mr-2"></i>Giriş Yap
+                        </a>
+                        <a href="{% url 'account_signup' %}" class="modern-button bg-gradient-to-r from-purple-400 to-indigo-500 hover:from-purple-500 hover:to-indigo-600 text-white font-semibold py-2.5 px-6 rounded-lg shadow-md transition-all duration-300 flex items-center">
+                            <i class="fas fa-user-plus mr-2"></i>Kayıt Ol
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mx-auto px-4 mt-6">
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert p-4 mb-4 text-sm rounded-lg flex items-center
+                    {% if message.tags == 'success' %}bg-green-50 text-green-800 border-green-300{% elif message.tags == 'error' %}bg-red-50 text-red-800 border-red-300{% elif message.tags == 'warning' %}bg-yellow-50 text-yellow-800 border-yellow-300{% else %}bg-blue-50 text-blue-800 border-blue-300{% endif %}" 
+                    role="alert">
+                    <i class="fas fa-
+                        {% if message.tags == 'success' %}check-circle text-green-500{% elif message.tags == 'error' %}exclamation-circle text-red-500{% elif message.tags == 'warning' %}exclamation-triangle text-yellow-500{% else %}info-circle text-blue-500{% endif %} mr-3"></i>
+                    <span>{{ message }}</span>
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+
+    <main class="flex-grow content-container">
+        <div class="container mx-auto px-4 py-8">
+            {% block content %}
+            {% endblock %}
+        </div>
+    </main>
+
+    <footer class="modern-footer text-white p-8 mt-8 shadow-inner relative">
+        <div class="container mx-auto text-center relative z-10">
+            <div class="flex flex-col md:flex-row justify-between items-center mb-6">
+                <div class="mb-4 md:mb-0">
+                    <h3 class="text-2xl font-bold mb-2 flex items-center justify-center md:justify-start">
+                        <i class="fas fa-feather-alt mr-2"></i>Betikma
+                    </h3>
+                    <p class="text-green-100">AI destekli metin editörü platformu</p>
+                </div>
+                <div class="flex flex-wrap justify-center space-x-2 md:space-x-6">
+                    <a href="https://www.kristalsoft.com.tr" target="_blank" rel="noopener noreferrer"
+                    class="text-white hover:text-green-200 transition-colors duration-300
+                            flex items-center mb-2 text-base md:text-lg">
+                        <i class="fa fa-globe mr-2"></i>
+                        <span>KristalSoft</span>
+                    </a>
+                    <a href="https://www.instagram.com/kristalsoft/" target="_blank" rel="noopener noreferrer"
+                    class="text-white hover:text-green-200 transition-colors duration-300
+                            flex items-center mb-2 text-base md:text-lg">
+                        <i class="fab fa-instagram mr-2"></i>
+                        <span>Instagram</span>
+                    </a>
+                    <a href="https://linkedin.com/company/kristalsoft/" target="_blank" rel="noopener noreferrer"
+                    class="text-white hover:text-green-200 transition-colors duration-300
+                            flex items-center mb-2 text-base md:text-lg">
+                        <i class="fab fa-linkedin mr-2"></i>
+                        <span>LinkedIn</span>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="border-t border-green-400 border-opacity-30 pt-6">
+                <p class="text-green-100 mb-4">&copy; 2025 Betikma by KristalSoft Yazılım. Tüm Hakları Saklıdır.</p>
+                <div class="flex flex-wrap justify-center space-x-6">
+                    <a href="{% url 'privacy_policy' %}" class="text-white hover:text-green-200 transition-colors duration-300 flex items-center mb-2">
+                        <i class="fas fa-shield-alt mr-2"></i>Gizlilik Politikası
+                    </a>
+                    <a href="{% url 'terms_of_service' %}" class="text-white hover:text-green-200 transition-colors duration-300 flex items-center mb-2">
+                        <i class="fas fa-file-contract mr-2"></i>Kullanım Koşulları
+                    </a>
+                    <a href="{% url 'support' %}" class="text-white hover:text-green-200 transition-colors duration-300 flex items-center mb-2">
+                        <i class="fas fa-question-circle mr-2"></i>Destek
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const navbarToggle = document.getElementById('navbar-toggle');
+            const navbarMenu = document.getElementById('navbar-menu');
+            const hamburgerIcon = document.querySelector('.hamburger-icon');
+
+            if (navbarToggle && navbarMenu && hamburgerIcon) {
+                navbarToggle.addEventListener('click', function() {
+                    // Menü geçiş animasyonu
+                    if (navbarMenu.classList.contains('navbar-menu-closed')) {
+                        navbarMenu.classList.remove('navbar-menu-closed');
+                        navbarMenu.classList.add('navbar-menu-open');
+                        navbarMenu.classList.add('flex');
+                    } else {
+                        navbarMenu.classList.remove('navbar-menu-open');
+                        navbarMenu.classList.add('navbar-menu-closed');
+                        setTimeout(() => {
+                            if (navbarMenu.classList.contains('navbar-menu-closed')) {
+                                navbarMenu.classList.remove('flex');
+                            }
+                        }, 400);
+                    }
+
+                    // Hamburger ikon animasyonu
+                    hamburgerIcon.classList.toggle('open');
+                });
+
+                // Büyük ekranlarda menünün her zaman açık olmasını sağla
+                window.addEventListener('resize', function() {
+                    if (window.innerWidth >= 1024) {
+                        navbarMenu.classList.remove('navbar-menu-closed', 'navbar-menu-open');
+                        navbarMenu.classList.add('flex');
+                        hamburgerIcon.classList.remove('open');
+                    } else {
+                        if (!navbarMenu.classList.contains('navbar-menu-open')) {
+                            navbarMenu.classList.add('navbar-menu-closed');
+                            navbarMenu.classList.remove('flex');
+                        }
+                    }
+                });
+
+                // Sayfa yüklendiğinde büyük ekrandaysa menüyü aç
+                if (window.innerWidth >= 1024) {
+                    navbarMenu.classList.remove('navbar-menu-closed');
+                    navbarMenu.classList.add('flex');
+                }
+            }
+
+            // Scroll animasyonları
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver(function(entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, observerOptions);
+
+            // Fade-in animasyonu için elemanları gözlemle
+            document.querySelectorAll('.fade-in-up').forEach(el => {
+                observer.observe(el);
+            });
+
+            // Alert otomatik kapatma
+            document.querySelectorAll('.alert').forEach(alert => {
+                setTimeout(() => {
+                    alert.style.opacity = '0';
+                    alert.style.transform = 'translateY(-20px)';
+                    setTimeout(() => {
+                        alert.remove();
+                    }, 300);
+                }, 5000);
+            });
+
+            // Navbar scroll efekti
+            let lastScrollY = window.scrollY;
+            window.addEventListener('scroll', () => {
+                const navbar = document.querySelector('.modern-nav');
+                if (window.scrollY > lastScrollY && window.scrollY > 100) {
+                    navbar.style.transform = 'translateY(-100%)';
+                } else {
+                    navbar.style.transform = 'translateY(0)';
+                }
+                lastScrollY = window.scrollY;
+            });
+        });
+    </script>
+</body>
+</html>

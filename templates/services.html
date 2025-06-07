@@ -1,0 +1,109 @@
+{% extends 'base.html' %}
+
+{% block title %}Hizmetler - Betikma{% endblock %}
+
+{% block content %}
+<div class="fade-in-up bg-white p-8 rounded-2xl shadow-xl w-full max-w-4xl mx-auto border border-gray-100 hover:shadow-2xl transition-all duration-500 relative overflow-hidden">
+    <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-dark-green to-pastel-green"></div>
+
+    <div class="text-center mb-8">
+        <div class="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-pastel-green to-green-100 rounded-full mb-4 shadow-lg">
+            <i class="fas fa-cogs text-3xl text-dark-green"></i>
+        </div>
+        <h1 class="text-4xl font-extrabold text-dark-green mb-4">Hizmetlerimiz</h1>
+        <p class="text-lg text-gray-600 max-w-2xl mx-auto">Metinlerinizi dönüştürmek ve geliştirmek için sunduğumuz yapay zeka destekli çözümler.</p>
+    </div>
+
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12">
+        <div class="bg-gradient-to-br from-pastel-purple to-purple-50 p-6 rounded-xl shadow-md border border-purple-200 transform hover:scale-105 transition-transform duration-300">
+            <div class="text-center mb-4">
+                <i class="fas fa-pen-nib text-5xl text-dark-purple mb-3"></i>
+                <h3 class="text-xl font-bold text-dark-purple">Metin Yeniden Yazma</h3>
+            </div>
+            <p class="text-gray-700 text-sm leading-relaxed mb-4">
+                Mevcut metinlerinizi farklı tonlarda, stillerde ve uzunluklarda yeniden yazarak intihalden kaçının ve özgün içerikler oluşturun.
+            </p>
+            <ul class="text-sm text-gray-600 space-y-2 mb-4">
+                <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-2"></i>Farklı Tonlar (Resmi, Samimi)</li>
+                <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-2"></i>Uzunluk Ayarı</li>
+                <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-2"></i>Anahtar Kelime Odaklı Yeniden Yazma</li>
+            </ul>
+        </div>
+
+        <div class="bg-gradient-to-br from-pastel-green to-green-50 p-6 rounded-xl shadow-md border border-green-200 transform hover:scale-105 transition-transform duration-300">
+            <div class="text-center mb-4">
+                <i class="fas fa-magic text-5xl text-dark-green mb-3"></i>
+                <h3 class="text-xl font-bold text-dark-green">İçerik Geliştirme</h3>
+            </div>
+            <p class="text-gray-700 text-sm leading-relaxed mb-4">
+                Taslak metinlerinizi daha akıcı, etkileyici ve profesyonel hale getirmek için yapay zeka destekli öneriler alın.
+            </p>
+            <ul class="text-sm text-gray-600 space-y-2 mb-4">
+                <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-2"></i>Grammar ve Yazım Kontrolü</li>
+                <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-2"></i>Cümle Yapısı İyileştirme</li>
+                <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-2"></i>Kelime Seçimi Önerileri</li>
+            </ul>
+        </div>
+
+        <div class="bg-gradient-to-br from-pastel-purple to-purple-50 p-6 rounded-xl shadow-md border border-purple-200 transform hover:scale-105 transition-transform duration-300">
+            <div class="text-center mb-4">
+                <i class="fas fa-file-alt text-5xl text-dark-purple mb-3"></i>
+                <h3 class="text-xl font-bold text-dark-purple">Özetleme ve Genişletme</h3>
+            </div>
+            <p class="text-gray-700 text-sm leading-relaxed mb-4">
+                Uzun metinleri hızlıca özetleyin veya kısa metinleri detaylandırarak kapsamlı içerikler oluşturun.
+            </p>
+            <ul class="text-sm text-gray-600 space-y-2 mb-4">
+                <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-2"></i>Otomatik Özetleme</li>
+                <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-2"></i>Metin Genişletme</li>
+                <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-2"></i>Ana Fikir Çıkarma</li>
+            </ul>
+        </div>
+
+        <div class="bg-gradient-to-br from-pastel-green to-green-50 p-6 rounded-xl shadow-md border border-green-200 transform hover:scale-105 transition-transform duration-300">
+            <div class="text-center mb-4">
+                <i class="fas fa-globe text-5xl text-dark-green mb-3"></i>
+                <h3 class="text-xl font-bold text-dark-green">Çeviri Desteği</h3>
+            </div>
+            <p class="text-gray-700 text-sm leading-relaxed mb-4">
+                Metinlerinizi farklı dillere çevirirken yapay zeka destekli doğruluk ve akıcılık sağlayın.
+            </p>
+            <ul class="text-sm text-gray-600 space-y-2 mb-4">
+                <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-2"></i>Çoklu Dil Desteği</li>
+                <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-2"></i>Kültürel Uyarlama</li>
+                <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-2"></i>Ton Koruma</li>
+            </ul>
+        </div>
+
+        <div class="bg-gradient-to-br from-pastel-purple to-purple-50 p-6 rounded-xl shadow-md border border-purple-200 transform hover:scale-105 transition-transform duration-300">
+            <div class="text-center mb-4">
+                <i class="fas fa-microphone text-5xl text-dark-purple mb-3"></i>
+                <h3 class="text-xl font-bold text-dark-purple">Sesli Metin Oluşturma</h3>
+            </div>
+            <p class="text-gray-700 text-sm leading-relaxed mb-4">
+                Yazılı metinlerinizi doğal ve akıcı sesli çıktılara dönüştürerek içerik tüketimini çeşitlendirin.
+            </p>
+            <ul class="text-sm text-gray-600 space-y-2 mb-4">
+                <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-2"></i>Farklı Ses Tonları</li>
+                <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-2"></i>Hız Ayarı</li>
+                <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-2"></i>Duygu Tanıma</li>
+            </ul>
+        </div>
+
+        <div class="bg-gradient-to-br from-pastel-green to-green-50 p-6 rounded-xl shadow-md border border-green-200 transform hover:scale-105 transition-transform duration-300">
+            <div class="text-center mb-4">
+                <i class="fas fa-chart-line text-5xl text-dark-green mb-3"></i>
+                <h3 class="text-xl font-bold text-dark-green">SEO Uyumlu İçerik</h3>
+            </div>
+            <p class="text-gray-700 text-sm leading-relaxed mb-4">
+                Arama motorlarında daha üst sıralarda yer almak için anahtar kelime optimizasyonlu ve SEO uyumlu metinler oluşturun.
+            </p>
+            <ul class="text-sm text-gray-600 space-y-2 mb-4">
+                <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-2"></i>Anahtar Kelime Yoğunluğu Kontrolü</li>
+                <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-2"></i>Başlık ve Meta Açıklama Optimizasyonu</li>
+                <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-2"></i>Okunabilirlik Analizi</li>
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}

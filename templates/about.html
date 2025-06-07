@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ about_content.page_title }} - Betikma{% endblock %}
+
+{% block content %}
+<div class="fade-in-up bg-white p-8 rounded-2xl shadow-xl w-full max-w-4xl mx-auto border border-gray-100 hover:shadow-2xl transition-all duration-500 relative overflow-hidden">
+    <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-dark-purple to-pastel-purple"></div>
+
+    <div class="text-center mb-8">
+        <div class="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-pastel-purple to-purple-100 rounded-full mb-4 shadow-lg">
+            <i class="fas fa-info-circle text-3xl text-dark-purple"></i>
+        </div>
+        <h1 class="text-4xl font-extrabold text-dark-purple mb-4">{{ about_content.page_title }}</h1>
+        <p class="text-lg text-gray-600 max-w-2xl mx-auto">{{ about_content.page_description }}</p>
+    </div>
+
+    <div class="grid md:grid-cols-2 gap-8 mt-12">
+        <div class="space-y-6">
+            <h2 class="text-2xl font-bold text-dark-green flex items-center">
+                <i class="fas fa-lightbulb mr-3 text-dark-green"></i>{{ about_content.mission_title }}
+            </h2>
+            <p class="text-gray-700 leading-relaxed">
+                {{ about_content.mission_text|linebreaksbr }}
+            </p>
+        </div>
+
+        <div class="space-y-6">
+            <h2 class="text-2xl font-bold text-dark-purple flex items-center">
+                <i class="fas fa-eye mr-3 text-dark-purple"></i>{{ about_content.vision_title }}
+            </h2>
+            <p class="text-gray-700 leading-relaxed">
+                {{ about_content.vision_text|linebreaksbr }}
+            </p>
+        </div>
+    </div>
+
+    <div class="mt-12 text-center">
+        <h2 class="text-2xl font-bold text-dark-green mb-6">Ekibimiz</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            {% for member in team_members %}
+            <div class="bg-gradient-to-br from-gray-50 to-white p-6 rounded-lg shadow-md border border-gray-100 transform hover:scale-105 transition-transform duration-300">
+                <img src="{{ member.get_profile_image_url }}" alt="{{ member.name }}" class="w-24 h-24 rounded-full mx-auto mb-4 object-cover border-4 {% if forloop.counter0|divisibleby:2 %}border-pastel-purple{% else %}border-pastel-green{% endif %}">
+                <h3 class="text-xl font-semibold {% if forloop.counter0|divisibleby:2 %}text-dark-purple{% else %}text-dark-green{% endif %} mb-1">{{ member.name }}</h3>
+                <p class="text-sm text-gray-500 mb-3">{{ member.title }}</p>
+                <p class="text-gray-600 text-sm">{{ member.description }}</p>
+            </div>
+            {% empty %}
+            <p class="col-span-full text-center text-gray-500">Henüz ekip üyesi eklenmedi.</p>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="mt-12 text-center">
+        <h2 class="text-2xl font-bold text-dark-purple mb-6">Değerlerimiz</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="p-6 bg-pastel-purple rounded-lg shadow-md flex flex-col items-center justify-center border border-purple-200">
+                <i class="{{ about_content.value1_icon }} text-4xl text-dark-purple mb-3"></i>
+                <h3 class="text-xl font-semibold text-dark-purple mb-2">{{ about_content.value1_title }}</h3>
+                <p class="text-gray-700 text-sm">{{ about_content.value1_description }}</p>
+            </div>
+            <div class="p-6 bg-pastel-green rounded-lg shadow-md flex flex-col items-center justify-center border border-green-200">
+                <i class="{{ about_content.value2_icon }} text-4xl text-dark-green mb-3"></i>
+                <h3 class="text-xl font-semibold text-dark-green mb-2">{{ about_content.value2_title }}</h3>
+                <p class="text-gray-700 text-sm">{{ about_content.value2_description }}</p>
+            </div>
+            <div class="p-6 bg-pastel-purple rounded-lg shadow-md flex flex-col items-center justify-center border border-purple-200">
+                <i class="{{ about_content.value3_icon }} text-4xl text-dark-purple mb-3"></i>
+                <h3 class="text-xl font-semibold text-dark-purple mb-2">{{ about_content.value3_title }}</h3>
+                <p class="text-gray-700 text-sm">{{ about_content.value3_description }}</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

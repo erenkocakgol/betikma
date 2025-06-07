@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}İletişim - Betikma{% endblock %}
+
+{% block content %}
+<div class="fade-in-up bg-white p-8 rounded-2xl shadow-xl w-full max-w-4xl mx-auto border border-gray-100 hover:shadow-2xl transition-all duration-500 relative overflow-hidden">
+    {# Added a visually appealing gradient border at the top for emphasis #}
+    <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-dark-green to-pastel-green"></div>
+
+    <div class="text-center mb-8">
+        {# Improved icon presentation with a consistent background and larger size #}
+        <div class="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-pastel-green to-green-100 rounded-full mb-4 shadow-lg">
+            <i class="fas fa-envelope text-3xl text-dark-green" aria-hidden="true"></i> {# Added aria-hidden for accessibility #}
+        </div>
+        {# Enhanced heading styling and added a descriptive paragraph #}
+        <h1 class="text-4xl font-extrabold text-dark-green mb-4">Bize Ulaşın</h1>
+        <p class="text-lg text-gray-600 max-w-2xl mx-auto">Sorularınız, geri bildirimleriniz veya iş birliği talepleriniz için bizimle iletişime geçin.</p>
+    </div>
+
+    <div class="grid md:grid-cols-2 gap-12 mt-12">
+        {# Section for the contact form #}
+        <div>
+            <h2 class="text-2xl font-bold text-dark-purple mb-6 flex items-center">
+                <i class="fas fa-paper-plane mr-3 text-dark-purple" aria-hidden="true"></i>Mesaj Gönderin
+            </h2>
+            <form method="post" class="space-y-6">
+                {% csrf_token %}
+                {{ form|crispy }}
+                {# Enhanced button styling with a hover effect and improved icon animation #}
+                <button type="submit" class="modern-button w-full bg-purple-600 hover:bg-dark-green-700 text-white font-semibold py-3 px-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 flex items-center justify-center group">
+                    <i class="fas fa-paper-plane mr-3 group-hover:scale-110 transition-transform duration-300" aria-hidden="true"></i>
+                    Mesajı Gönder
+                    <i class="fas fa-arrow-right ml-3 opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-300" aria-hidden="true"></i>
+                </button>
+            </form>
+        </div>
+
+        {# Section for contact information #}
+        <div>
+            <h2 class="text-2xl font-bold text-dark-green mb-6 flex items-center">
+                <i class="fas fa-map-marker-alt mr-3 text-dark-green" aria-hidden="true"></i>İletişim Bilgileri
+            </h2>
+            <div class="space-y-6 text-gray-700">
+                {# Consistent styling for information blocks with distinct colors #}
+                <div class="flex items-center p-4 bg-pastel-green rounded-lg shadow-sm border border-green-200">
+                    <i class="fab fa-whatsapp text-dark-green text-2xl mr-4" aria-hidden="true"></i>
+                    <div>
+                        <h3 class="font-semibold text-dark-green">WhatsApp</h3>
+                        <p>+90 505 710 9585</p>
+                    </div>
+                </div>
+                <div class="flex items-center p-4 bg-pastel-purple rounded-lg shadow-sm border border-purple-200">
+                    <i class="fas fa-envelope text-dark-purple text-2xl mr-4" aria-hidden="true"></i>
+                    <div>
+                        <h3 class="font-semibold text-dark-purple">E-posta</h3>
+                        {# Ensured email link is clearly styled and accessible #}
+                        <p><a href="mailto:info@betikma.com" class="text-dark-purple hover:underline">kristalsoft.info@gmail.com</a></p>
+                    </div>
+                </div>
+                <div class="flex items-center p-4 bg-pastel-green rounded-lg shadow-sm border border-green-200">
+                    <i class="fas fa-clock text-dark-green text-2xl mr-4" aria-hidden="true"></i>
+                    <div>
+                        <h3 class="font-semibold text-dark-green">Çalışma Saatleri</h3>
+                        <p>Pazartesi - Cuma: 09:00 - 18:00</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {# Section for social media links #}
+    <div class="mt-12 text-center">
+        <h2 class="text-2xl font-bold text-dark-purple mb-6">Sosyal Medya</h2>
+        <div class="flex justify-center space-x-6">
+            {# Added descriptive text for screen readers (sr-only) for social media links #}
+            <a href="https://www.kristalsoft.com.tr" target="_blank" rel="noopener noreferrer" class="text hover:text-accent-purple transition-colors duration-300 text-4xl">
+                <i class="fa fa-globe" aria-hidden="true"></i>
+                <span class="sr-only">Geliştirici Web Sayfamız</span>
+            </a>
+            <a href="https://www.instagram.com/kristalsoft/" target="_blank" rel="noopener noreferrer" class="text hover:text-accent-purple transition-colors duration-300 text-4xl">
+                <i class="fab fa-instagram" aria-hidden="true"></i>
+                <span class="sr-only">Instagram Profilimiz</span>
+            </a>
+            <a href="https://linkedin.com/company/kristalsoft/" target="_blank" rel="noopener noreferrer" class="text hover:text-accent-purple transition-colors duration-300 text-4xl">
+                <i class="fab fa-linkedin" aria-hidden="true"></i>
+                <span class="sr-only">LinkedIn Sayfamız</span>
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}Destek - Betikma{% endblock %}
+
+{% block content %}
+<div class="fade-in-up bg-white p-8 rounded-2xl shadow-xl w-full max-w-4xl mx-auto border border-gray-100 hover:shadow-2xl transition-all duration-500 relative overflow-hidden">
+    <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-dark-purple to-pastel-purple"></div>
+
+    <div class="text-center mb-8">
+        <div class="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-pastel-purple to-purple-100 rounded-full mb-4 shadow-lg">
+            <i class="fas fa-question-circle text-3xl text-dark-purple"></i>
+        </div>
+        <h1 class="text-4xl font-extrabold text-dark-purple mb-4">Destek Merkezi</h1>
+        <p class="text-lg text-gray-600 max-w-2xl mx-auto">Sorularınız mı var? Yardımcı olmak için buradayız!</p>
+    </div>
+
+    <div class="grid md:grid-cols-2 gap-12 mt-12">
+        <div>
+            <h2 class="text-2xl font-bold text-dark-green mb-6 flex items-center">
+                <i class="fas fa-question-circle mr-3 text-dark-green"></i>Sıkça Sorulan Sorular
+            </h2>
+            <div class="space-y-4">
+                <div class="bg-pastel-green p-4 rounded-lg shadow-sm border border-green-200 cursor-pointer" onclick="toggleAccordion('faq1')">
+                    <div class="flex justify-between items-center font-semibold text-dark-green">
+                        <span>Betikma nedir?</span>
+                        <i id="icon-faq1" class="fas fa-chevron-down transition-transform duration-300"></i>
+                    </div>
+                    <div id="faq1" class="mt-2 text-gray-700 hidden">
+                        Betikma, yapay zeka destekli bir metin oluşturma ve düzenleme platformudur. Metinlerinizi yeniden yazmanıza, geliştirmenize, özetlemenize ve daha fazlasına yardımcı olur.
+                    </div>
+                </div>
+                <div class="bg-pastel-purple p-4 rounded-lg shadow-sm border border-purple-200 cursor-pointer" onclick="toggleAccordion('faq2')">
+                    <div class="flex justify-between items-center font-semibold text-dark-purple">
+                        <span>Nasıl kayıt olabilirim?</span>
+                        <i id="icon-faq2" class="fas fa-chevron-down transition-transform duration-300"></i>
+                    </div>
+                    <div id="faq2" class="mt-2 text-gray-700 hidden">
+                        Ana sayfamızdaki "Kayıt Ol" butonuna tıklayarak veya <a href="{% url 'account_signup' %}" class="text-dark-purple hover:underline">buradan</a> kayıt olabilirsiniz. E-posta doğrulama adımlarını takip etmeyi unutmayın.
+                    </div>
+                </div>
+                <div class="bg-pastel-green p-4 rounded-lg shadow-sm border border-green-200 cursor-pointer" onclick="toggleAccordion('faq3')">
+                    <div class="flex justify-between items-center font-semibold text-dark-green">
+                        <span>Hangi dilleri destekliyorsunuz?</span>
+                        <i id="icon-faq3" class="fas fa-chevron-down transition-transform duration-300"></i>
+                    </div>
+                    <div id="faq3" class="mt-2 text-gray-700 hidden">
+                        Betikma şu anda Türkçe ve İngilizce dillerini tam olarak desteklemektedir. Diğer diller için de geliştirme çalışmalarımız devam etmektedir.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div>
+            <h2 class="text-2xl font-bold text-dark-purple mb-6 flex items-center">
+                <i class="fas fa-headset mr-3 text-dark-purple"></i>Destek Talebi Oluşturun
+            </h2>
+            <form method="post" class="space-y-6">
+                {% csrf_token %}
+                {{ form|crispy }}
+                <button type="submit" class="modern-button w-full bg-purple-600 hover:bg-dark-green-700 text-white font-semibold py-3 px-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 flex items-center justify-center group">
+                    <i class="fas fa-paper-plane mr-3 group-hover:scale-110 transition-transform duration-300" aria-hidden="true"></i>
+                    Talep Gönder
+                    <i class="fas fa-arrow-right ml-3 opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-300" aria-hidden="true"></i>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <div class="mt-12 text-center p-6 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl border border-blue-100">
+        <h2 class="text-2xl font-bold text-blue-800 mb-4 flex items-center justify-center">
+            <i class="fas fa-phone-alt mr-3 text-blue-600"></i>Acil Destek
+        </h2>
+        <p class="text-gray-700 mb-4">Acil durumlar için doğrudan bizimle iletişime geçebilirsiniz:</p>
+        <p class="text-xl font-bold text-blue-700"><i class="fas fa-envelope mr-2"></i><a href="mailto:kristalsoft.info@gmail.com" class="text-blue-700 hover:underline">kristalsoft.info@gmail.com</a></p>
+    </div>
+</div>
+
+<script>
+    function toggleAccordion(id) {
+        const content = document.getElementById(id);
+        const icon = document.getElementById('icon-' + id);
+        if (content.classList.contains('hidden')) {
+            content.classList.remove('hidden');
+            icon.classList.remove('fa-chevron-down');
+            icon.classList.add('fa-chevron-up');
+        } else {
+            content.classList.add('hidden');
+            icon.classList.remove('fa-chevron-up');
+            icon.classList.add('fa-chevron-down');
+        }
+    }
+</script>
+{% endblock %}

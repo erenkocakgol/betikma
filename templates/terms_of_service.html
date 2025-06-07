@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+
+{% block title %}Kullanım Koşulları - Betikma{% endblock %}
+
+{% block content %}
+<div class="fade-in-up bg-white p-8 rounded-2xl shadow-xl w-full max-w-4xl mx-auto border border-gray-100 hover:shadow-2xl transition-all duration-500 relative overflow-hidden">
+    <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-dark-green to-pastel-green"></div>
+
+    <div class="text-center mb-8">
+        <div class="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-pastel-green to-green-100 rounded-full mb-4 shadow-lg">
+            <i class="fas fa-file-contract text-3xl text-dark-green"></i>
+        </div>
+        <h1 class="text-4xl font-extrabold text-dark-green mb-4">Kullanım Koşulları</h1>
+        <p class="text-lg text-gray-600 max-w-2xl mx-auto">Betikma hizmetlerini kullanmadan önce lütfen bu koşulları dikkatlice okuyun.</p>
+    </div>
+
+    <div class="prose max-w-none text-gray-700 leading-relaxed space-y-6">
+        <p>Betikma'ya ("Hizmet") erişiminiz ve kullanımınız, bu Kullanım Koşullarına ("Koşullar") tabidir. Hizmete erişerek veya Hizmeti kullanarak, bu Koşullara bağlı kalmayı kabul edersiniz. Bu Koşulların herhangi bir bölümünü kabul etmiyorsanız, Hizmete erişemezsiniz.</p>
+
+        <h2 class="text-2xl font-bold text-dark-purple mt-8 mb-4">1. Hesaplar</h2>
+        <p>Hizmetimizi kullandığınızda, her zaman doğru, eksiksiz ve güncel bilgiler sağlamakla yükümlüsünüz. Bunu yapmamak, Hizmetimizdeki hesabınızın derhal feshedilmesine neden olabilir.</p>
+        <ul class="list-disc list-inside space-y-2 ml-4">
+            <li>Hesabınızın güvenliğini sağlamaktan siz sorumlusunuz.</li>
+            <li>Hesabınızda gerçekleşen tüm faaliyetlerden siz sorumlusunuz.</li>
+            <li>Hesabınızın yetkisiz kullanımını veya başka herhangi bir güvenlik ihlalini derhal bize bildirmelisiniz.</li>
+        </ul>
+
+        <h2 class="text-2xl font-bold text-dark-green mt-8 mb-4">2. Fikri Mülkiyet</h2>
+        <p>Hizmet ve orijinal içeriği, özellikleri ve işlevselliği Betikma'nın ve lisans verenlerinin münhasır mülkiyetindedir ve kalacaktır. Hizmet, telif hakkı, ticari marka ve diğer yasalarla korunmaktadır.</p>
+        <ul class="list-disc list-inside space-y-2 ml-4">
+            <li>Hizmetin herhangi bir bölümünü çoğaltamaz, değiştiremez, dağıtamaz veya satamazsınız.</li>
+            <li>Hizmetin herhangi bir bölümünü tersine mühendislik yapamaz veya kaynak kodunu çıkarmaya çalışamazsınız.</li>
+        </ul>
+
+        <h2 class="text-2xl font-bold text-dark-purple mt-8 mb-4">3. Yasal Olmayan Kullanım</h2>
+        <p>Hizmeti yasa dışı veya bu Koşulları ihlal eden herhangi bir amaçla kullanamazsınız. Buna aşağıdakiler dahildir ancak bunlarla sınırlı değildir:</p>
+        <ul class="list-disc list-inside space-y-2 ml-4">
+            <li>Yasa dışı veya zararlı içerik oluşturma veya dağıtma.</li>
+            <li>Başkalarının haklarını ihlal etme.</li>
+            <li>Hizmetin güvenliğini veya bütünlüğünü bozma.</li>
+        </ul>
+
+        <h2 class="text-2xl font-bold text-dark-green mt-8 mb-4">4. Fesih</h2>
+        <p>Bu Koşulları ihlal etmeniz durumunda, önceden bildirimde bulunmaksızın veya sorumluluk kabul etmeksizin Hizmetimize erişiminizi derhal feshedebilir veya askıya alabiliriz.</p>
+        <ul class="list-disc list-inside space-y-2 ml-4">
+            <li>Hesabınızın feshedilmesi durumunda, Hizmeti kullanma hakkınız derhal sona erer.</li>
+            <li>Hesabınızı istediğiniz zaman feshedebilirsiniz.</li>
+        </ul>
+
+        <h2 class="text-2xl font-bold text-dark-purple mt-8 mb-4">5. Sorumluluğun Sınırlandırılması</h2>
+        <p>Betikma ve yöneticileri, çalışanları, ortakları, acenteleri, tedarikçileri veya iştirakleri, hiçbir durumda, Hizmetin kullanımından veya kullanılamamasından kaynaklanan herhangi bir dolaylı, arızi, özel, sonuçsal veya cezai zarardan sorumlu olmayacaktır.</p>
+
+        <h2 class="text-2xl font-bold text-dark-green mt-8 mb-4">6. Geçerli Hukuk</h2>
+        <p>Bu Koşullar, kanunlar ihtilafı hükümlerine bakılmaksızın Türkiye Cumhuriyeti yasalarına göre yönetilecek ve yorumlanacaktır.</p>
+
+        <h2 class="text-2xl font-bold text-dark-purple mt-8 mb-4">7. Koşullardaki Değişiklikler</h2>
+        <p>Bu Koşulları istediğimiz zaman değiştirme veya yenileme hakkını saklı tutarız. Herhangi bir revizyonu yürürlüğe girmeden önce en az 30 gün önceden bildirimde bulunacağız. Bir revizyon yürürlüğe girdikten sonra Hizmetimize erişmeye veya kullanmaya devam ederek, revize edilmiş koşullara bağlı kalmayı kabul edersiniz.</p>
+
+        <h2 class="text-2xl font-bold text-dark-green mt-8 mb-4">8. İletişim</h2>
+        <p>Bu Koşullar hakkında herhangi bir sorunuz varsa, lütfen <a href="mailto:kristalsoft.info@gmail.com" class="text-dark-green hover:underline">kristalsoft.info@gmail.com</a> adresinden bizimle iletişime geçin.</p>
+
+        <p class="text-sm text-gray-500 mt-8 text-right">Son Güncelleme: 25 Mayıs 2025</p>
+    </div>
+</div>
+{% endblock %}
