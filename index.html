@@ -3,316 +3,690 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Eren Kocakgöl - Meine Arbeiten</title>
+    <title>Betikma - KI Texteditor</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        /* Genel sıfırlama ve temel stil */
+        :root {
+            --color-pastel-purple: #E8DCFF;
+            --color-pastel-green: #D4F4DD;
+            --color-dark-purple: #7C3AED;
+            --color-dark-green: #059669;
+            --color-accent-purple: #A855F7;
+            --color-accent-green: #10B981;
+            --color-light-gray: #F8FAFC;
+            --color-medium-gray: #E2E8F0;
+            --shadow-soft: 0 4px 20px rgba(0, 0, 0, 0.08);
+            --shadow-medium: 0 8px 30px rgba(0, 0, 0, 0.12);
+            --shadow-strong: 0 15px 35px rgba(0, 0, 0, 0.15);
+        }
+
         * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+            scroll-behavior: smooth;
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); /* Arka plan gradyanı */
-            min-height: 100vh;
-            color: #333; /* Metin rengi */
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+            background-attachment: fixed;
+            line-height: 1.6;
+            font-feature-settings: "liga" 1, "kern" 1;
+            text-rendering: optimizeLegibility;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 40px 20px;
-        }
-
-        .header {
-            text-align: center;
-            margin-bottom: 60px;
-        }
-
-        .header h1 {
-            color: white;
-            font-size: 3rem;
-            font-weight: 300;
-            margin-bottom: 10px;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.3); /* Başlık gölgesi */
-        }
-
-        .header p {
-            color: rgba(255,255,255,0.9);
-            font-size: 1.2rem;
-            font-weight: 300;
-        }
-
-        /* Geri dön linki */
-        .back-link {
-            position: absolute;
-            top: 30px;
-            left: 30px;
-            color: white;
-            text-decoration: none;
-            font-size: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            transition: all 0.3s ease;
-            padding: 10px 15px;
-            border-radius: 25px;
-            background: rgba(255,255,255,0.1);
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.25);
             backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.18);
         }
 
-        .back-link:hover {
-            background: rgba(255,255,255,0.2);
-            transform: translateX(-5px);
+        .bg-pastel-purple { background-color: var(--color-pastel-purple); }
+        .text-pastel-purple { color: var(--color-pastel-purple); }
+        .bg-pastel-green { background-color: var(--color-pastel-green); }
+        .text-pastel-green { color: var(--color-pastel-green); }
+        .bg-dark-purple { background: linear-gradient(135deg, var(--color-dark-purple), var(--color-accent-purple)); }
+        .text-dark-purple { color: var(--color-dark-purple); }
+        .bg-dark-green { background: linear-gradient(135deg, var(--color-dark-green), var(--color-accent-green)); }
+        .text-dark-green { color: var(--color-dark-green); }
+        .border-dark-purple { border-color: var(--color-dark-purple); }
+        .border-dark-green { border-color: var(--color-dark-green); }
+
+        .modern-nav {
+            background: rgba(124, 58, 237, 0.95);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: none;
+            box-shadow: var(--shadow-medium);
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
 
-        /* Proje kartları grid düzeni */
-        .projects-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 30px;
-            margin-top: 40px;
+        .modern-nav:hover {
+            background: rgba(124, 58, 237, 0.98);
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-strong);
         }
 
-        .project-card {
-            background: rgba(255,255,255,0.95);
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
-            transition: all 0.3s ease;
+        .logo {
+            background: linear-gradient(45deg, #ffffff, #e8dcff);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-size: 200% 200%;
+            animation: gradientShift 3s ease-in-out infinite;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .modern-button {
             position: relative;
-        }
-
-        .project-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 25px 50px rgba(0,0,0,0.15);
-        }
-
-        .project-image {
-            width: 100%;
-            height: 200px;
-            background: linear-gradient(45deg, #f0f2f5, #e1e8ed); /* Placeholder background */
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
             overflow: hidden;
+            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            transform: translateZ(0);
         }
 
-        .project-image img {
+        .modern-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
             width: 100%;
             height: 100%;
-            object-fit: cover; /* Ensures the image covers the area, cropping if necessary */
-            display: block;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
         }
 
-        .project-image::after {
+        .modern-button:hover::before {
+            left: 100%;
+        }
+
+        .modern-button:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-medium);
+        }
+
+        .hamburger-icon {
+            width: 32px;
+            height: 24px;
+            position: relative;
+            cursor: pointer;
+            z-index: 1000;
+        }
+
+        .hamburger-icon span {
+            display: block;
+            position: absolute;
+            height: 3px;
+            width: 100%;
+            background: linear-gradient(45deg, #ffffff, #e8dcff);
+            border-radius: 2px;
+            opacity: 1;
+            left: 0;
+            transform: rotate(0deg);
+            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .hamburger-icon span:nth-child(1) { top: 0px; }
+        .hamburger-icon span:nth-child(2) { top: 10px; }
+        .hamburger-icon span:nth-child(3) { top: 20px; }
+
+        .hamburger-icon.open span:nth-child(1) {
+            top: 10px;
+            transform: rotate(135deg);
+        }
+        .hamburger-icon.open span:nth-child(2) {
+            opacity: 0;
+            left: -60px;
+        }
+        .hamburger-icon.open span:nth-child(3) {
+            top: 10px;
+            transform: rotate(-135deg);
+        }
+
+        .navbar-menu-closed {
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .navbar-menu-open {
+            max-height: 500px;
+            opacity: 1;
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .nav-link {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: -100%;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, var(--color-pastel-purple), var(--color-pastel-green));
+            transition: left 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            left: 0;
+        }
+
+        .alert {
+            border-left: 4px solid;
+            box-shadow: var(--shadow-soft);
+            transition: all 0.3s ease;
+            animation: slideInFromTop 0.5s ease-out;
+        }
+
+        @keyframes slideInFromTop {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .alert:hover {
+            transform: translateX(4px);
+            box-shadow: var(--shadow-medium);
+        }
+
+        .modern-footer {
+            background: linear-gradient(135deg, var(--color-dark-green), var(--color-accent-green));
+            position: relative;
+            overflow: hidden;
+        }
+
+        .modern-footer::before {
             content: '';
             position: absolute;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
-            background: linear-gradient(135deg, rgba(102,126,234,0.1), rgba(118,75,162,0.1));
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            pointer-events: none;
         }
 
-        .project-content {
-            padding: 25px;
-        }
-
-        .project-title {
-            font-size: 1.4rem;
-            font-weight: 600;
-            color: #2c3e50;
-            margin-bottom: 12px;
-        }
-
-        .project-description {
-            color: #7f8c8d;
-            line-height: 1.6;
-            margin-bottom: 20px;
-            font-size: 0.95rem;
-        }
-
-        .project-tech {
+        .content-container {
+            min-height: calc(100vh - 200px);
             display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            margin-bottom: 20px;
+            flex-direction: column;
         }
 
-        .tech-tag {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-            padding: 5px 12px;
-            border-radius: 15px;
-            font-size: 0.8rem;
-            font-weight: 500;
-        }
-
-        .project-links {
-            display: flex;
-            gap: 12px;
-        }
-
-        .project-link {
-            flex: 1;
-            text-align: center;
-            padding: 12px 20px;
-            border-radius: 10px;
-            text-decoration: none;
-            font-weight: 500;
-            transition: all 0.3s ease;
-            border: 2px solid transparent;
-        }
-
-        .link-demo {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-        }
-
-        .link-demo:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(102,126,234,0.4);
-        }
-
-        .link-code {
-            background: transparent;
-            color: #2c3e50;
-            border-color: #2c3e50;
-        }
-
-        .link-code:hover {
-            background: #2c3e50;
-            color: white;
-        }
-
-        .empty-state {
-            text-align: center;
-            color: rgba(255,255,255,0.8);
-            font-size: 1.1rem;
-            margin-top: 60px;
-        }
-
-        /* Duyarlı tasarım (responsive) */
-        @media (max-width: 768px) {
-            .container {
-                padding: 20px 15px;
-            }
-
-            .header h1 {
-                font-size: 2.2rem;
-            }
-
-            .back-link {
-                position: relative;
-                top: 0;
-                left: 0;
-                display: inline-flex;
-                margin-bottom: 30px;
-            }
-
-            .projects-grid {
-                grid-template-columns: 1fr;
-                gap: 20px;
-            }
-
-            .project-links {
-                flex-direction: column;
-            }
-        }
-
-        /* Animasyonlar */
-        .fade-in {
-            animation: fadeInUp 0.6s ease forwards;
+        .fade-in-up {
             opacity: 0;
             transform: translateY(30px);
+            transition: all 0.6s ease-out;
         }
 
-        .fade-in:nth-child(1) { animation-delay: 0.1s; }
-        .fade-in:nth-child(2) { animation-delay: 0.2s; }
-        .fade-in:nth-child(3) { animation-delay: 0.3s; }
-        .fade-in:nth-child(4) { animation-delay: 0.4s; }
+        .fade-in-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
 
-        @keyframes fadeInUp {
-            to {
-                opacity: 1;
-                transform: translateY(0);
+        .loading-shimmer {
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--color-light-gray);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(45deg, var(--color-dark-purple), var(--color-dark-green));
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(45deg, var(--color-accent-purple), var(--color-accent-green));
+        }
+
+        .demo-banner {
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            color: white;
+            text-align: center;
+            padding: 10px;
+            font-weight: bold;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                font-size: 14px;
             }
+        }
+
+        .focus-visible:focus {
+            outline: 2px solid var(--color-accent-purple);
+            outline-offset: 2px;
+        }
+
+        .brain-svg {
+            width: 100%;
+            height: auto;
+            max-width: 400px;
         }
     </style>
 </head>
-<body>
-    <div class="container">
-        <a href="https://erenkocakgol.com" class="back-link">
-            ← Zurück zur Startseite
-        </a>
+<body class="flex flex-col min-h-screen antialiased">
 
-        <div class="header">
-            <h1>Meine Arbeiten</h1>
-            <p>Sehen Sie sich die von mir entwickelten Projekte an</p>
-        </div>
-
-        <div class="projects-grid" id="projectsGrid">
-            </div>
-
-        <div class="empty-state" id="emptyState" style="display: none;">
-            <p>Projekte werden bald hinzugefügt...</p>
-        </div>
+    <div class="demo-banner">
+        🚀 Dies ist eine DEMO-Seite - Vorstellung des Betikma KI Texteditors 🚀
     </div>
 
-    <script>
-        // Fügen Sie Ihre Projekte hier hinzu
-        const projects = [
-            {
-                title: "AI Content Editor Website Landing Page mit Google Gemma Integration",
-                description: "Moderne und benutzerfreundliche SaaS-Plattform. Umfasst responsives Design, Zahlungsintegration und Admin-Panel.",
-                technologies: ["Vanilla JS", "Django", "SQLite3"],
-                demoUrl: "https://erenkocakgol.github.io/betikma",
-                codeUrl: "https://github.com/erenkocakgol/betikma",
-                imageUrl: "betikma.png" // Example image URL
-            },
-        ];
+    <nav class="modern-nav p-4 shadow-lg sticky top-0 z-50">
+        <div class="container mx-auto flex flex-wrap items-center justify-between">
+            <a href="#" class="logo text-white text-3xl font-black tracking-wider rounded-lg p-3 hover:bg-white hover:bg-opacity-10 transition-all duration-300">
+                <i class="fas fa-feather-alt mr-2"></i>Betikma
+            </a>
 
-        // Projekte render fonksiyonu
-        function renderProjects() {
-            const projectsGrid = document.getElementById('projectsGrid');
-            const emptyState = document.getElementById('emptyState');
+            <button id="navbar-toggle" class="lg:hidden text-white focus:outline-none p-3 rounded-lg hover:bg-white hover:bg-opacity-10 transition-all duration-300 focus-visible">
+                <div class="hamburger-icon">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </button>
 
-            // Eğer projects dizisi boşsa, boş durumu göster
-            if (projects.length === 0) {
-                emptyState.style.display = 'block';
-                return;
-            }
+            <div id="navbar-menu" class="lg:flex flex-col lg:flex-row lg:items-center w-full lg:w-auto mt-4 lg:mt-0 navbar-menu-closed lg:navbar-menu-open">
+                <a href="#home" class="nav-link block text-white text-lg font-medium py-3 px-4 rounded-lg hover:bg-white hover:bg-opacity-10 transition-all duration-300 lg:ml-2">
+                    <i class="fas fa-home mr-2"></i>Startseite
+                </a>
+                <a href="#about" class="nav-link block text-white text-lg font-medium py-3 px-4 rounded-lg hover:bg-white hover:bg-opacity-10 transition-all duration-300 lg:ml-2">
+                    <i class="fas fa-info-circle mr-2"></i>Über uns
+                </a>
+                <a href="#services" class="nav-link block text-white text-lg font-medium py-3 px-4 rounded-lg hover:bg-white hover:bg-opacity-10 transition-all duration-300 lg:ml-2">
+                    <i class="fas fa-cogs mr-2"></i>Dienste
+                </a>
+                <a href="#contact" class="nav-link block text-white text-lg font-medium py-3 px-4 rounded-lg hover:bg-white hover:bg-opacity-10 transition-all duration-300 lg:ml-2">
+                    <i class="fas fa-envelope mr-2"></i>Kontakt
+                </a>
+                
+                <div class="lg:ml-auto mt-4 lg:mt-0 flex flex-col lg:flex-row items-center gap-3">
+                    <button onclick="showDemoAlert('Anmelden')" class="modern-button bg-gradient-to-r from-green-400 to-emerald-500 hover:from-green-500 hover:to-emerald-600 text-white font-semibold py-2.5 px-6 rounded-lg shadow-md transition-all duration-300 flex items-center">
+                        <i class="fas fa-sign-in-alt mr-2"></i>Anmelden
+                    </button>
+                    <button onclick="showDemoAlert('Registrieren')" class="modern-button bg-gradient-to-r from-purple-400 to-indigo-500 hover:from-purple-500 hover:to-indigo-600 text-white font-semibold py-2.5 px-6 rounded-lg shadow-md transition-all duration-300 flex items-center">
+                        <i class="fas fa-user-plus mr-2"></i>Registrieren
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
 
-            // projects dizisindeki her proje için HTML oluştur ve grid'e ekle
-            projectsGrid.innerHTML = projects.map((project, index) => `
-                <div class="project-card fade-in" style="animation-delay: ${index * 0.1}s">
-                    <div class="project-image">
-                        <img src="${project.imageUrl}" alt="${project.title} Bild">
-                    </div>
-                    <div class="project-content">
-                        <h3 class="project-title">${project.title}</h3>
-                        <p class="project-description">${project.description}</p>
-                        <div class="project-tech">
-                            ${project.technologies.map(tech => `<span class="tech-tag">${tech}</span>`).join('')}
+    <div id="alert-container" class="container mx-auto px-4 mt-6"></div>
+
+    <main class="flex-grow content-container" id="home">
+        <div class="container mx-auto px-4 py-8">
+            
+            <section class="py-16 md:py-24 text-center fade-in-up">
+                <div class="container mx-auto px-6">
+                    <div class="flex flex-col md:flex-row items-center justify-center relative">
+                        <h1 class="text-5xl md:text-7xl font-extrabold mb-6 md:mb-0 md:mr-8">
+                            <span class="bg-clip-text text-transparent bg-gradient-to-r from-dark-purple to-accent-purple" style="color: rgb(157, 83, 255);">
+                                Betikma.
+                            </span>
+                            Die <br><span class="bg-clip-text text-transparent bg-gradient-to-r from-dark-purple to-accent-purple" style="color: rgb(255, 0, 247);">KLÜGSTE</span> Art zu schreiben.
+                        </h1>
+                        <div class="brain-svg">
+                            <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+                                <defs>
+                                    <linearGradient id="brainGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" style="stop-color:#7C3AED;stop-opacity:1" />
+                                        <stop offset="50%" style="stop-color:#A855F7;stop-opacity:1" />
+                                        <stop offset="100%" style="stop-color:#059669;stop-opacity:1" />
+                                    </linearGradient>
+                                    <filter id="glow">
+                                        <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+                                        <feMerge> 
+                                            <feMergeNode in="coloredBlur"/>
+                                            <feMergeNode in="SourceGraphic"/>
+                                        </feMerge>
+                                    </filter>
+                                </defs>
+                                <path d="M200 50 C120 50, 50 100, 50 160 C50 200, 80 230, 120 240 C140 250, 180 250, 200 240 C220 250, 260 250, 280 240 C320 230, 350 200, 350 160 C350 100, 280 50, 200 50 Z" 
+                                      fill="url(#brainGradient)" 
+                                      filter="url(#glow)"
+                                      class="animate-pulse"/>
+                                <circle cx="120" cy="120" r="8" fill="#fff" opacity="0.8">
+                                    <animate attributeName="opacity" values="0.8;0.3;0.8" dur="2s" repeatCount="indefinite"/>
+                                </circle>
+                                <circle cx="180" cy="100" r="6" fill="#fff" opacity="0.6">
+                                    <animate attributeName="opacity" values="0.6;0.2;0.6" dur="1.5s" repeatCount="indefinite"/>
+                                </circle>
+                                <circle cx="250" cy="130" r="7" fill="#fff" opacity="0.7">
+                                    <animate attributeName="opacity" values="0.7;0.3;0.7" dur="1.8s" repeatCount="indefinite"/>
+                                </circle>
+                                <circle cx="200" cy="160" r="5" fill="#fff" opacity="0.5">
+                                    <animate attributeName="opacity" values="0.5;0.1;0.5" dur="1.2s" repeatCount="indefinite"/>
+                                </circle>
+                                <circle cx="280" cy="180" r="6" fill="#fff" opacity="0.6">
+                                    <animate attributeName="opacity" values="0.6;0.2;0.6" dur="2.2s" repeatCount="indefinite"/>
+                                </circle>
+                                <line x1="120" y1="120" x2="180" y2="100" stroke="#fff" stroke-width="2" opacity="0.4">
+                                    <animate attributeName="opacity" values="0.4;0.1;0.4" dur="2s" repeatCount="indefinite"/>
+                                </line>
+                                <line x1="180" y1="100" x2="250" y2="130" stroke="#fff" stroke-width="2" opacity="0.3">
+                                    <animate attributeName="opacity" values="0.3;0.1;0.3" dur="1.5s" repeatCount="indefinite"/>
+                                </line>
+                                <line x1="200" y1="160" x2="280" y2="180" stroke="#fff" stroke-width="2" opacity="0.4">
+                                    <animate attributeName="opacity" values="0.4;0.1;0.4" dur="1.8s" repeatCount="indefinite"/>
+                                </line>
+                            </svg>
                         </div>
-                        <div class="project-links">
-                            <a href="${project.demoUrl}" target="_blank" class="project-link link-demo">
-                                Live-Demo
-                            </a>
-                            <a href="${project.codeUrl}" target="_blank" class="project-link link-code">
-                                Quellcode
-                            </a>
+                    </div>
+                    <br>
+                    <p class="text-xl md:text-2xl text-slate-700 mb-10 max-w-3xl mx-auto">
+                        Bringen Sie Ihre Inhaltserstellung, Bearbeitung und Verbesserung mit unserem KI-gestützten Texteditor auf die nächste Stufe. Schnell, intelligent und effektiv.
+                    </p>
+                    <div class="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-6">
+                        <button onclick="showDemoAlert('Editor')" class="modern-button bg-dark-purple text-white font-semibold py-3 px-8 rounded-lg text-lg shadow-xl hover:shadow-2xl transform hover:scale-105 w-full sm:w-auto">
+                            <i class="fas fa-rocket mr-2"></i>Jetzt starten
+                        </button>
+                        <button onclick="scrollToSection('services')" class="modern-button bg-transparent border-2 border-dark-purple text-dark-purple font-semibold py-3 px-8 rounded-lg text-lg hover:bg-pastel-purple hover:text-dark-purple w-full sm:w-auto">
+                            <i class="fas fa-info-circle mr-2"></i>Mehr erfahren
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <section id="about" class="py-16 md:py-20 bg-slate-50 fade-in-up">
+                <div class="container mx-auto px-6">
+                    <div class="text-center mb-12 md:mb-16">
+                        <h2 class="text-4xl md:text-5xl font-bold text-slate-800 mb-4">Warum Betikma?</h2>
+                        <p class="text-lg text-slate-600 max-w-2xl mx-auto">Alles, was Sie brauchen, um Ihre Inhalte zu perfektionieren, und noch mehr.</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        <div class="glass-effect p-8 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 transform hover:-translate-y-1">
+                            <div class="flex items-center justify-center w-16 h-16 mb-6 rounded-full bg-pastel-purple text-dark-purple text-3xl">
+                                <i class="fas fa-bolt"></i>
+                            </div>
+                            <h3 class="text-2xl font-semibold text-slate-800 mb-3">KI-Leistung</h3>
+                            <p class="text-slate-600 leading-relaxed">Analysiert Ihre Texte, macht Vorschläge und verbessert sie dank fortschrittlicher KI-Algorithmen.</p>
+                        </div>
+
+                        <div class="glass-effect p-8 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 transform hover:-translate-y-1">
+                            <div class="flex items-center justify-center w-16 h-16 mb-6 rounded-full bg-pastel-green text-dark-green text-3xl">
+                                <i class="fas fa-magic"></i>
+                            </div>
+                            <h3 class="text-2xl font-semibold text-slate-800 mb-3">Einfache Bedienung</h3>
+                            <p class="text-slate-600 leading-relaxed">Bietet eine benutzerfreundliche Oberfläche für ein intuitives Erlebnis, das jeder problemlos nutzen kann.</p>
+                        </div>
+
+                        <div class="glass-effect p-8 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 transform hover:-translate-y-1">
+                            <div class="flex items-center justify-center w-16 h-16 mb-6 rounded-full bg-dark-purple text-white text-3xl">
+                                <i class="fas fa-feather-alt"></i>
+                            </div>
+                            <h3 class="text-2xl font-semibold text-slate-800 mb-3">Vielseitige Tools</h3>
+                            <p class="text-slate-600 leading-relaxed">Breites Spektrum an Tools, von Grammatikprüfung und Stilvorschlägen bis hin zu Zusammenfassungen und Keyword-Analysen.</p>
+                        </div>
+
+                        <div class="glass-effect p-8 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 transform hover:-translate-y-1">
+                            <div class="flex items-center justify-center w-16 h-16 mb-6 rounded-full bg-pastel-purple text-dark-purple text-3xl">
+                                <i class="fas fa-comments"></i>
+                            </div>
+                            <h3 class="text-2xl font-semibold text-slate-800 mb-3">Interaktives Feedback</h3>
+                            <p class="text-slate-600 leading-relaxed">Verbessern Sie Ihre Texte Schritt für Schritt mit sofortigem Feedback und beschleunigen Sie Ihren Lernprozess.</p>
+                        </div>
+
+                        <div class="glass-effect p-8 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 transform hover:-translate-y-1">
+                            <div class="flex items-center justify-center w-16 h-16 mb-6 rounded-full bg-pastel-green text-dark-green text-3xl">
+                                <i class="fas fa-shield-alt"></i>
+                            </div>
+                            <h3 class="text-2xl font-semibold text-slate-800 mb-3">Sicher und vertraulich</h3>
+                            <p class="text-slate-600 leading-relaxed">Ihre Texte sind wertvoll. Ihre Daten werden mit den höchsten Sicherheitsmaßnahmen geschützt.</p>
+                        </div>
+
+                        <div class="glass-effect p-8 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 transform hover:-translate-y-1">
+                            <div class="flex items-center justify-center w-16 h-16 mb-6 rounded-full bg-dark-purple text-white text-3xl">
+                                <i class="fas fa-sync-alt"></i>
+                            </div>
+                            <h3 class="text-2xl font-semibold text-slate-800 mb-3">Kontinuierliche Entwicklung</h3>
+                            <p class="text-slate-600 leading-relaxed">Unsere Plattform wird kontinuierlich mit Benutzerfeedback und den neuesten KI-Technologien aktualisiert.</p>
                         </div>
                     </div>
                 </div>
-            `).join('');
-        }
+            </section>
 
-        // Sayfa yüklendiğinde projeleri render et
-        document.addEventListener('DOMContentLoaded', renderProjects);
+            <section id="services" class="py-16 md:py-20 fade-in-up">
+                <div class="container mx-auto px-6">
+                    <div class="text-center mb-12 md:mb-16">
+                        <h2 class="text-4xl md:text-5xl font-bold text-slate-800 mb-4">Wie funktioniert Betikma?</h2>
+                        <p class="text-lg text-slate-600 max-w-2xl mx-auto">Perfektionieren Sie Ihre Texte in nur 3 einfachen Schritten.</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 text-center">
+                        <div class="p-6">
+                            <div class="flex items-center justify-center w-20 h-20 mx-auto mb-6 rounded-full bg-dark-green text-white text-3xl font-bold shadow-lg">
+                                1
+                            </div>
+                            <h3 class="text-2xl font-semibold text-slate-800 mb-3">Laden Sie Ihren Text hoch</h3>
+                            <p class="text-slate-600">Kopieren Sie den Text, den Sie bearbeiten oder verbessern möchten, und fügen Sie ihn ein oder laden Sie Ihre Datei hoch.</p>
+                        </div>
+
+                        <div class="p-6">
+                            <div class="flex items-center justify-center w-20 h-20 mx-auto mb-6 rounded-full bg-dark-green text-white text-3xl font-bold shadow-lg">
+                                2
+                            </div>
+                            <h3 class="text-2xl font-semibold text-slate-800 mb-3">KI-Analyse und Bearbeitung</h3>
+                            <p class="text-slate-600">Unsere intelligente KI analysiert Ihren Text und bietet Ihnen Vorschläge zur Verbesserung, Korrektur und Stiloptimierung.</p>
+                        </div>
+
+                        <div class="p-6">
+                            <div class="flex items-center justify-center w-20 h-20 mx-auto mb-6 rounded-full bg-dark-green text-white text-3xl font-bold shadow-lg">
+                                3
+                            </div>
+                            <h3 class="text-2xl font-semibold text-slate-800 mb-3">Perfekte Texte Erhalten</h3>
+                            <p class="text-slate-600">Überprüfen Sie die Vorschläge, nehmen Sie Änderungen vor und laden Sie Ihren fehlerfreien und optimierten Text herunter.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="testimonials" class="py-16 md:py-20 bg-slate-50 fade-in-up">
+                <div class="container mx-auto px-6">
+                    <div class="text-center mb-12 md:mb-16">
+                        <h2 class="text-4xl md:text-5xl font-bold text-slate-800 mb-4">Was unsere Nutzer sagen</h2>
+                        <p class="text-lg text-slate-600 max-w-2xl mx-auto">Hören Sie, wie Betikma ihnen geholfen hat.</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        <div class="glass-effect p-8 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300">
+                            <p class="text-slate-700 italic mb-6">"Betikma hat meine Schreibweise revolutioniert. Ich kann mir mein Leben ohne es nicht mehr vorstellen!"</p>
+                            <div class="flex items-center">
+                                <img src="https://placehold.co/60x60/A855F7/ffffff?text=U1" alt="Benutzerbild 1" class="w-12 h-12 rounded-full mr-4 object-cover">
+                                <div>
+                                    <p class="font-semibold text-slate-800">Anna Schmidt</p>
+                                    <p class="text-sm text-slate-500">Inhaltsentwicklerin</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="glass-effect p-8 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300">
+                            <p class="text-slate-700 italic mb-6">"Die Grammatikprüfungsfunktion ist unglaublich. Sie fängt Fehler auf, die ich immer übersehe."</p>
+                            <div class="flex items-center">
+                                <img src="https://placehold.co/60x60/059669/ffffff?text=U2" alt="Benutzerbild 2" class="w-12 h-12 rounded-full mr-4 object-cover">
+                                <div>
+                                    <p class="font-semibold text-slate-800">Max Mustermann</p>
+                                    <p class="text-sm text-slate-500">Student</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="glass-effect p-8 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300">
+                            <p class="text-slate-700 italic mb-6">"Ich liebe, wie Betikma meinen Stil verbessert, ohne meine einzigartige Stimme zu verlieren."</p>
+                            <div class="flex items-center">
+                                <img src="https://placehold.co/60x60/7C3AED/ffffff?text=U3" alt="Benutzerbild 3" class="w-12 h-12 rounded-full mr-4 object-cover">
+                                <div>
+                                    <p class="font-semibold text-slate-800">Lena Meyer</p>
+                                    <p class="text-sm text-slate-500">Freiberufliche Autorin</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="contact" class="py-16 md:py-20 fade-in-up">
+                <div class="container mx-auto px-6">
+                    <div class="text-center mb-12 md:mb-16">
+                        <h2 class="text-4xl md:text-5xl font-bold text-slate-800 mb-4">Kontaktieren Sie uns</h2>
+                        <p class="text-lg text-slate-600 max-w-2xl mx-auto">Haben Sie Fragen oder Anregungen? Wir sind für Sie da!</p>
+                    </div>
+
+                    <div class="max-w-xl mx-auto bg-white p-8 rounded-xl shadow-lg glass-effect">
+                        <form onsubmit="event.preventDefault(); showDemoAlert('Ihre Nachricht wurde gesendet!');">
+                            <div class="mb-6">
+                                <label for="name" class="block text-slate-700 text-lg font-medium mb-2">Name</label>
+                                <input type="text" id="name" name="name" class="w-full p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-dark-purple focus:outline-none transition-all duration-200" placeholder="Ihr Name" required>
+                            </div>
+                            <div class="mb-6">
+                                <label for="email" class="block text-slate-700 text-lg font-medium mb-2">E-Mail</label>
+                                <input type="email" id="email" name="email" class="w-full p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-dark-purple focus:outline-none transition-all duration-200" placeholder="Ihre E-Mail-Adresse" required>
+                            </div>
+                            <div class="mb-6">
+                                <label for="message" class="block text-slate-700 text-lg font-medium mb-2">Nachricht</label>
+                                <textarea id="message" name="message" rows="5" class="w-full p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-dark-purple focus:outline-none transition-all duration-200" placeholder="Ihre Nachricht" required></textarea>
+                            </div>
+                            <button type="submit" class="modern-button bg-dark-green text-white font-semibold py-3 px-8 rounded-lg text-lg shadow-xl hover:shadow-2xl transform hover:scale-105 w-full">
+                                <i class="fas fa-paper-plane mr-2"></i>Nachricht senden
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer class="modern-footer text-white py-12">
+        <div class="container mx-auto px-6 text-center">
+            <div class="flex flex-col md:flex-row justify-between items-center mb-8">
+                <a href="#" class="logo text-white text-3xl font-black tracking-wider mb-4 md:mb-0">
+                    <i class="fas fa-feather-alt mr-2"></i>Betikma
+                </a>
+                <div class="flex space-x-6">
+                    <a href="#" class="text-white hover:text-pastel-purple transition-colors duration-300"><i class="fab fa-facebook-f text-2xl"></i></a>
+                    <a href="#" class="text-white hover:text-pastel-purple transition-colors duration-300"><i class="fab fa-twitter text-2xl"></i></a>
+                    <a href="#" class="text-white hover:text-pastel-purple transition-colors duration-300"><i class="fab fa-linkedin-in text-2xl"></i></a>
+                    <a href="#" class="text-white hover:text-pastel-purple transition-colors duration-300"><i class="fab fa-instagram text-2xl"></i></a>
+                </div>
+            </div>
+            <div class="text-lg mb-8">
+                <p>KI-gestützter Texteditor für perfekte Inhalte.</p>
+            </div>
+            <div class="flex flex-col sm:flex-row justify-center space-y-2 sm:space-y-0 sm:space-x-8 text-sm">
+                <a href="#" class="text-white hover:text-pastel-purple transition-colors duration-300">Datenschutzbestimmungen</a>
+                <a href="#" class="text-white hover:text-pastel-purple transition-colors duration-300">Nutzungsbedingungen</a>
+                <a href="#" class="text-white hover:text-pastel-purple transition-colors duration-300">FAQ</a>
+            </div>
+            <p class="mt-8 text-sm text-white opacity-75">&copy; 2024 Betikma. Alle Rechte vorbehalten.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const navbarToggle = document.getElementById('navbar-toggle');
+            const navbarMenu = document.getElementById('navbar-menu');
+            const alertContainer = document.getElementById('alert-container');
+
+            navbarToggle.addEventListener('click', () => {
+                navbarMenu.classList.toggle('navbar-menu-closed');
+                navbarMenu.classList.toggle('navbar-menu-open');
+                navbarToggle.querySelector('.hamburger-icon').classList.toggle('open');
+            });
+
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.addEventListener('click', () => {
+                    if (window.innerWidth < 1024) {
+                        navbarMenu.classList.remove('navbar-menu-open');
+                        navbarMenu.classList.add('navbar-menu-closed');
+                        navbarToggle.querySelector('.hamburger-icon').classList.remove('open');
+                    }
+                });
+            });
+
+            const showDemoAlert = (action) => {
+                const alertDiv = document.createElement('div');
+                alertDiv.className = 'alert bg-gradient-to-r from-purple-100 to-green-100 border-purple-500 text-purple-800 p-4 rounded-lg flex items-center justify-between mb-4';
+                alertDiv.innerHTML = `
+                    <p class="font-semibold text-lg">
+                        <i class="fas fa-info-circle mr-3"></i>Dies ist eine DEMO-Seite. Aktion: <strong>${action}</strong>
+                    </p>
+                    <button class="text-purple-600 hover:text-purple-900 text-2xl ml-4 transition-colors duration-200" onclick="this.parentElement.remove()">
+                        &times;
+                    </button>
+                `;
+                alertContainer.prepend(alertDiv);
+
+                setTimeout(() => {
+                    alertDiv.remove();
+                }, 5000);
+            };
+            window.showDemoAlert = showDemoAlert;
+
+            const scrollToSection = (id) => {
+                document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+            };
+            window.scrollToSection = scrollToSection;
+
+            const faders = document.querySelectorAll('.fade-in-up');
+            const appearOnScroll = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (!entry.isIntersecting) {
+                        return;
+                    }
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                });
+            }, {
+                threshold: 0.2
+            });
+
+            faders.forEach(fader => {
+                appearOnScroll.observe(fader);
+            });
+        });
     </script>
 </body>
 </html>
